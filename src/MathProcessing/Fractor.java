@@ -71,10 +71,18 @@ public class Fractor {
         
         return true;
     }
+      
+    public boolean isPositive()
+    {
+        if(numerator * denominator > 0)
+            return true;
+        
+        return false;
+    }
     
     public boolean isInteger()
     {
-        if(denominator == 1)
+        if(denominator == 1 || denominator == -1)
             return true;
         
         return false;
@@ -123,7 +131,7 @@ public class Fractor {
         return mul;
     }
     
-    public boolean canReverse()
+    public boolean canReciprocal()
     {
         if(numerator == 0)
             return false;
@@ -131,7 +139,7 @@ public class Fractor {
         return true;
     }
     
-    public void reverse()
+    public void reciprocal()
     {
         int temp = numerator;
         numerator = denominator;
@@ -146,7 +154,21 @@ public class Fractor {
     @Override
     public String toString()
     {
-        return numerator + "/" + denominator;
+        String s = "";
+        
+        if(numerator == 0)
+            return "0";
+        
+        if(denominator == 1)
+            return s + numerator;
+        
+        if(denominator == -1)
+            return s + (-numerator);
+        
+        if(!isPositive())
+            return -Math.abs(numerator) + "/" + Math.abs(denominator);
+                        
+        return numerator + "/" + denominator;        
     }
     //end of Fractor Operations region
 }

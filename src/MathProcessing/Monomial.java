@@ -72,30 +72,50 @@ public class Monomial {
     @Override
     public String toString()
     {
-        int num = coefficient.getNumerator();
-        String numS = String.valueOf(num);
-        
-        int den = coefficient.getDenominator();
-        String denS = String.valueOf(den);
-        
+        String coef = coefficient.toString();
         int pow = power;
-        String powS = String.valueOf(pow);
         
-        if(num == 0)
-        {            
-            if(pow == 0)
-                return "";
-            else
-                return "x^" + pow;
-        }
-        else if (pow == 0)
+        if(coef.equals("0"))
         {
-            if(num == 0)
-                return "";
-            else
-                return numS;
+            return "";
         }
         
-        return numS + "x^" + powS;
+        if(coef.equals("1"))
+        {
+            if(power == 0)
+                return "1";
+            
+            if(power == 1)
+                return "x";
+            
+            return "x^" + power;
+        }
+        
+        if(coef.equals("-1"))
+        {
+            if(power == 0)
+                return "-1";
+            
+            if(power == 1)
+                return "-x";
+            
+            return "-x^" + power;
+        }
+        
+        if(power == 0)
+            return coef;
+        
+        if(power == 1)
+        {
+            if(!coefficient.isInteger())
+                return "(" + coef + ")" + "x";
+            
+            return coef + "x";
+        }            
+        
+        if(!coefficient.isInteger())
+            return "(" + coef + ")" + "x^" + power;
+        
+        return coef + "x^" + power;
     }
 }

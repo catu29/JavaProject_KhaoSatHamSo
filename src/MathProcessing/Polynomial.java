@@ -13,11 +13,21 @@ import java.util.ArrayList;
  */
 public class Polynomial {
     private ArrayList<Monomial> polynomial;
-    private boolean isValid = true;
+    private ArrayList<Monomial> derivative;
+    private boolean isValid = true;    
+    private boolean isLinear = false;
+    private boolean isQuadratic = false;
+    private boolean isCubic = false;
+    private boolean isQuartic = false;
     
     public ArrayList<Monomial> getPolynomial()
     {
         return polynomial;
+    }
+    
+    public ArrayList<Monomial> getDerivative()
+    {
+        return derivative;
     }
     
     public void setPolynomial(ArrayList<Monomial> poly)
@@ -76,7 +86,7 @@ public class Polynomial {
         isValid = b;
     }
     
-    //Using DFS algorithm
+    //Using DFS algorithm to create an array of monomial (polynomial) from existing expression tree
     public void create(BinaryTreeNode node)
     {
         ArrayList<BinaryTreeNode> beTraveled = new ArrayList<BinaryTreeNode>();
@@ -121,7 +131,7 @@ public class Polynomial {
                     Polynomial poly1 = operand.get(operand.size()-2);
                     Polynomial poly2 = operand.get(operand.size()-1);
                     Polynomial poly = new Polynomial();
-                                        
+                    
                     if(traveler.value.equals("+"))
                     {
                         poly = (new Plus()).plus(poly1, poly2);
@@ -137,20 +147,20 @@ public class Polynomial {
                     else if(traveler.value.equals("/"))
                     {
                         if(poly2.getPolynomial().size() > 1 || poly2.getPolynomial().get(0).getCoefficient().getNumerator() == 0)
-                        {
-                            isValid = false;
-                            return;
-                        }
-                        else
-                        {
-                            poly = (new Divide()).divide(poly1, poly2);
-
-                            if(poly == null)
                             {
                                 isValid = false;
                                 return;
                             }
-                        }
+                            else
+                            {
+                                poly = (new Divide()).divide(poly1, poly2);
+                                
+                                if(poly == null)
+                                {
+                                    isValid = false;
+                                    return;
+                                }
+                            }
                     }                    
                     
                     if(poly == null)
@@ -183,5 +193,227 @@ public class Polynomial {
         } while(!beTraveled.isEmpty() && isValid);        
         
         polynomial = (MathStaticMethod.compact(operand.get(0).getPolynomial()));
+    }
+    
+    // Create a derivative from this polynomial
+    public void createDerivative()
+    {
+        if(polynomial.isEmpty())
+            return;
+        
+        if(derivative == null)
+        {
+            derivative = new ArrayList<Monomial>();
+        }
+        
+        for(int i = 0; i < polynomial.size(); i++)
+        {
+            Monomial mono = polynomial.get(i);
+            Fractor coeff = new Fractor(mono.getCoefficient().multiply(new Fractor(mono.getPower())));
+            int pow = 0;
+            if(mono.getPower()>0)
+            {
+                pow = mono.getPower()-1;
+            }
+            
+            derivative.add(new Monomial(coeff, pow));
+            derivative = MathStaticMethod.compact(derivative);
+        }
+    }   
+    
+    // Functions for classifying equation
+    public void classify()
+    {
+        checkQuartic();
+        checkCubic();
+        checkQuadratic();
+        checkLinear();
+    }    
+    
+    private void checkQuartic()
+    { 
+        if(polynomial.size() > 3)
+        {
+            isQuartic = false;
+            return;
+        }
+        
+        if(polynomial.get(polynomial.size()-1).getPower() != 4)
+        {
+            isQuartic = false;
+            return;
+        }
+        
+        if(polynomial.size() > 1)
+        {
+            for(int i = 1; i < polynomial.size(); i++)
+            {
+                if(polynomial.get(i).getPower() > 4 || polynomial.get(i).getPower() == 3 || polynomial.get(i).getPower() == 1)
+                {
+                    isQuartic = false;
+                    return;
+                }
+            }
+        }
+        
+        isQuartic = true;
+    }
+    
+    public boolean isQuartic()
+    {
+        return isQuartic;
+    }
+    
+    //====
+    
+    private void checkCubic()
+    {
+        if(polynomial.size() > 4)
+        {
+            isCubic = false;
+            return;
+        }
+        
+        if(polynomial.get(polynomial.size()-1).getPower() != 3)
+        {
+            isCubic = false;
+            return;
+        }
+        
+        if(polynomial.size() > 1)
+        {
+            for(int i = 1; i < polynomial.size(); i++)
+            {
+                if(polynomial.get(i).getPower() > 3)
+                {
+                    isCubic = false;
+                    return;
+                }
+            }
+        }
+        
+        isCubic = true;
+    }
+    
+    public boolean isCubic()
+    {
+        return isCubic;
+    }
+    
+    //===
+    
+    private void checkQuadratic()
+    {
+        if(polynomial.size() > 3)
+        {
+            isQuadratic = false;
+            return;
+        }
+        
+        if(polynomial.get(polynomial.size()-1).getPower() != 2)
+        {
+            isQuadratic = false;
+            return;
+        }
+        
+        if(polynomial.size() > 1)
+        {
+            for(int i = 1; i < polynomial.size(); i++)
+            {
+                if(polynomial.get(i).getPower() > 2)
+                {
+                    isQuadratic = false;
+                    return;
+                }
+            }
+        }
+        
+        isQuadratic = true;
+    }
+    
+    public boolean isQuadratic()
+    {
+        return isQuadratic;
+    }
+    
+    //===
+    
+    private void checkLinear()
+    {
+        if(polynomial.size() > 2)
+        {
+            isLinear = false;
+            return;
+        }
+        
+        if(polynomial.get(polynomial.size()-1).getPower() != 1)
+        {
+            isLinear = false;
+            return;
+        }
+        
+        if(polynomial.size() > 1)
+        {
+            for(int i = 1; i < polynomial.size(); i++)
+            {
+                if(polynomial.get(i).getPower() > 3)
+                {
+                    isLinear = false;
+                    return;
+                }
+            }
+        }
+        
+        isLinear = true;
+    }
+    
+    public boolean isLinear()
+    {
+        return isLinear;
+    }
+    
+    @Override
+    public String toString()
+    {
+        StringBuffer s = new StringBuffer(polynomial.get(polynomial.size() - 1).toString());
+        
+        if(polynomial.size() > 1)
+        {
+            for(int i = polynomial.size() - 2; i > -1; i--)
+            {
+                if(polynomial.get(i).getCoefficient().isPositive())
+                {
+                    s.append("+").append(polynomial.get(i).toString());
+                }
+                else
+                {
+                    s.append(polynomial.get(i).toString());
+                }
+            }
+        }
+        
+        return s.toString();
+    }
+    
+    public String derivativeString()
+    {
+        StringBuffer s = new StringBuffer(derivative.get(derivative.size() - 1).toString());
+        
+        if(derivative.size() > 1)
+        {
+            for(int i = derivative.size() - 2; i > -1; i--)
+            {
+                if(derivative.get(i).getCoefficient().isPositive())
+                {
+                    s.append("+").append(derivative.get(i).toString());
+                }
+                else
+                {
+                    s.append(derivative.get(i).toString());
+                }
+            }
+        }
+        
+        return s.toString();
     }
 }

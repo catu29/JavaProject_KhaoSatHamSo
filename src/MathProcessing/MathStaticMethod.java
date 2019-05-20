@@ -45,6 +45,16 @@ public class MathStaticMethod {
         return false;
     }  
     
+    //Check if a string is trigonometic function in expression
+    public static boolean isTrigonometic(String c)
+    {
+        if(c.equals("sin") || c.equals("cos") || c.equals("tan") || c.equals("cot") || c.equals("tg") || c.equals("cotg"))
+            return true;
+        
+        return false;
+    }
+    
+    
     //Find GCD - Greatest Common Division of 'a' and 'b'
     public static int findGCD(int a, int b)
     {
@@ -65,6 +75,20 @@ public class MathStaticMethod {
             }
         }
         return a;
+    }
+    
+    public static boolean isSquare(int n)
+    {
+        if(n < 4)
+            return false;
+        
+        for(int i = 0; i < n/2; i++)
+        {
+            if(n%i == 0)
+                return true;
+        }
+        
+        return false;
     }
     
     public static ArrayList<Monomial> compact(ArrayList<Monomial> operands)
@@ -102,10 +126,10 @@ public class MathStaticMethod {
             {                
                 monoCompact.setCoefficient(monoCompact.getCoefficient().add(monoAdding.getCoefficient()));
                 compactList.remove(monoAdding.getPower() - diff);
-                compactList.add(monoAdding.getPower() - diff, monoCompact);}
+                compactList.add(monoAdding.getPower() - diff, monoCompact);
+            }
         }
-        
-        
+                
         for(int i = 0; i < compactList.size(); i++)
         {
             if(compactList.get(i).getCoefficient().getNumerator() == 0)
@@ -128,5 +152,5 @@ public class MathStaticMethod {
             
             System.out.print(node.value);
         }         
-    }
+    }    
 }
