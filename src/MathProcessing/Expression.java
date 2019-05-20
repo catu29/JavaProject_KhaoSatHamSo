@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  */
 public class Expression {
     private String expression;
+    private boolean isTrigonometric = false;
     
     //=== region Constructors
     public Expression()
@@ -31,7 +32,30 @@ public class Expression {
     public String getExpression()
     {
         return expression;
-    }  
+    }
+    
+    public boolean isTrigonometric()
+    {
+        if(expression.indexOf("sin") != -1)
+            return true;
+                    
+        if(expression.indexOf("cos") != -1)
+            return true;
+        
+        if(expression.indexOf("tan") != -1)
+            return true;
+        
+        if(expression.indexOf("cot") != -1)
+            return true;
+        
+        if(expression.indexOf("tg") != -1)
+            return true;
+        
+        if(expression.indexOf("cotg") != -1)
+            return true;
+            
+        return false;
+    }
     
     public boolean isValid()
     {
