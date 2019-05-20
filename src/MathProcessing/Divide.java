@@ -24,9 +24,9 @@ public class Divide {
     
     public Monomial divide(Monomial operand1, Monomial operand2)
     {    
-        if(operand2.getCoefficient().canReverse())
+        if(operand2.getCoefficient().canReciprocal())
         {
-            operand2.getCoefficient().reverse();
+            operand2.getCoefficient().reciprocal();
             Fractor coeff = new Fractor(operand1.getCoefficient().multiply(operand2.getCoefficient()));
             
             Monomial mono = new Monomial(coeff, operand1.getPower() - operand2.getPower());
