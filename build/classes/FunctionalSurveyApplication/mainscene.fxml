@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="paneMain" prefHeight="680.0" prefWidth="1300.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FunctionalSurveyApplication.mainscenecontroller">
+    <children>
+        <Text fx:id="txtAppTitle" layoutX="547.0" text="KHẢO SÁT ĐỒ THỊ HÀM SỐ" AnchorPane.topAnchor="20" /> 
+            
+        <AnchorPane fx:id="paneScene" prefHeight="620.0" prefWidth="1280.0" AnchorPane.topAnchor="60.0">
+            <children>
+                <Text fx:id="txtFX" text="F(x) =" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="33.0" />  
+                <TextField fx:id="txtFieldFX" onKeyPressed="#TextFieldOnKeyPress" prefHeight="30.0" prefWidth="584.0" promptText="Nhập phương trình và nhấn enter" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="30.0">
+                </TextField>
+                <Button layoutX="993.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Khảo sát" AnchorPane.leftAnchor="993.0" AnchorPane.topAnchor="30.0" />      
+              
+              
+                <VBox AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="140.0">
+                    <children>
+                        <Text fx:id="txtHamSo" />
+                        <Text fx:id="txtTXD" text="1. Tập xác định:" />
+                        <Text fx:id="txtTXD_result">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin></Text>
+                        <Text fx:id="txtDaoHam" text="2. Đạo hàm:" />
+                        <Text fx:id="txtDaoHam_result">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin></Text>                        
+                        <Text fx:id="txtGioiHan" text="3. Giới hạn:" />
+                        <Text fx:id="txtGioiHan_result">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin></Text>                        
+                        <Text fx:id="txtBangBienThien" text="4. Bảng biến thiên:" /> 
+                        <Text fx:id="txtBangBienThien_result">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin></Text>                        
+                        <Text fx:id="txtNhanXet" text="5. Nhận xét:" />
+                        <Text fx:id="txtNhanXet_result">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin></Text>
+                    </children>
+                </VBox>
+              
+                <Pane fx:id="paneGraph" prefHeight="500.0" prefWidth="620.0" layoutX="640.0" layoutY="106.0">
+                    <children>
+                  <Line endX="305.0" layoutX="310.0" layoutY="250.0" startX="-305.0" strokeWidth="2.0" />
+                  <Line endX="245.0" layoutX="310.0" layoutY="250.0" rotate="90.0" startX="-245.0" strokeWidth="2.0" />
+                  <Line endX="-90.0" layoutX="400.0" layoutY="6.0" rotate="-45.0" smooth="false" startX="-100.0" strokeWidth="2.0">
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                  </Line>
+                  <Line endX="-90.0" layoutX="409.0" layoutY="7.0" rotate="45.0" smooth="false" startX="-100.0" strokeWidth="2.0">
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                  </Line>
+                  <Line endX="10.0" layoutX="607.0" layoutY="247.0" rotate="45.0" strokeWidth="2.0">
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                  </Line>
+                  <Line endX="100.0" layoutX="516.0" layoutY="253.0" rotate="-45.0" startX="90.0" strokeWidth="2.0">
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                  </Line>
+                  <Text layoutX="296.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="321.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="y">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="606.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="x">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Line endX="5.0" layoutX="310.0" layoutY="25.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="50.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="75.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="100.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="125.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="150.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="175.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="200.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="225.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="275.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="300.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="325.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="350.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="375.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="400.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="425.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="450.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="310.0" layoutY="475.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="35.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="60.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="85.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="110.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="135.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="160.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="185.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="210.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="235.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="260.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="285.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="335.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="360.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="385.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="410.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="435.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="460.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="485.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="510.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="535.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="560.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Line endX="5.0" layoutX="585.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                  <Text layoutX="295.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+                  <Text layoutX="295.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+                  <Text layoutX="293.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+                  <Text layoutX="294.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+                  <Text layoutX="290.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" />
+                  <Text layoutX="289.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-2" />
+                  <Text layoutX="288.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-3" />
+                  <Text layoutX="287.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-4" />
+                  <Text layoutX="53.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-5" />
+                  <Text layoutX="103.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-4" />
+                  <Text layoutX="153.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-3" />
+                  <Text layoutX="203.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-2" />
+                  <Text layoutX="253.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" />
+                  <Text layoutX="356.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+                  <Text layoutX="407.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+                  <Text layoutX="457.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+                  <Text layoutX="507.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+                  <Text layoutX="556.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+               </children></Pane>
+            
+            </children>    
+        </AnchorPane>
+    </children>
+</AnchorPane>

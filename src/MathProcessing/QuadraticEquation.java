@@ -21,7 +21,7 @@ public class QuadraticEquation extends CommonEquation {
     @Override
     public String limitation()
     {
-        return "(-∞; +∞)";
+        return "Hàm số có giới hạn trong khoảng (-∞; +∞)";
     }
     
     @Override
@@ -67,13 +67,13 @@ public class QuadraticEquation extends CommonEquation {
         
         if(a.isPositive())
         {
-            str.append("\nHàm số nghịch biến trên (-∞;").append(Ix.toString()).append(").\n");
-            str.append("Hàm số đồng biến trên (").append(Ix.toString()).append(";+∞).");
+            str.append("\nHàm số nghịch biến trên (-∞; ").append(Ix.toString()).append(").\n");
+            str.append("Hàm số đồng biến trên (").append(Ix.toString()).append("; +∞).");
         }
         else
         {
-            str.append("\nHàm số đồng biến trên (-∞;").append(Ix.toString()).append(").\n");
-            str.append("Hàm số nghịch biến trên (").append(Ix.toString()).append(";+∞).");
+            str.append("\nHàm số đồng biến trên (-∞; ").append(Ix.toString()).append(").\n");
+            str.append("Hàm số nghịch biến trên (").append(Ix.toString()).append("; +∞).");
         }
         
         return str.toString();

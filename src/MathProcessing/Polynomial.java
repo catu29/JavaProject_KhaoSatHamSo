@@ -120,7 +120,8 @@ public class Polynomial {
                     operand.add(new Polynomial(new Monomial(new Fractor(1), 1)));
                 }
                 
-                traveler = beTraveled.get(beTraveled.size() - 1);
+                if(!beTraveled.isEmpty())
+                    traveler = beTraveled.get(beTraveled.size() - 1);
             }
             else if(colored.contains(traveler.leftChild) && colored.contains(traveler.rightChild))
             {
@@ -383,11 +384,13 @@ public class Polynomial {
             {
                 if(polynomial.get(i).getCoefficient().isPositive())
                 {
-                    s.append("+").append(polynomial.get(i).toString());
+                    s.append(" + ").append(polynomial.get(i).toString());
                 }
                 else
                 {
-                    s.append(polynomial.get(i).toString());
+                    StringBuilder str = new StringBuilder(polynomial.get(i).toString());
+                    str.deleteCharAt(0);
+                    s.append(" - ").append(str.toString());
                 }
             }
         }
@@ -405,11 +408,13 @@ public class Polynomial {
             {
                 if(derivative.get(i).getCoefficient().isPositive())
                 {
-                    s.append("+").append(derivative.get(i).toString());
+                    s.append(" + ").append(derivative.get(i).toString());
                 }
                 else
                 {
-                    s.append(derivative.get(i).toString());
+                    StringBuilder str = new StringBuilder(derivative.get(i).toString());
+                    str.deleteCharAt(0);
+                    s.append(" - ").append(str.toString());
                 }
             }
         }
