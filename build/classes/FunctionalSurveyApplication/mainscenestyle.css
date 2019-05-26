@@ -54,7 +54,11 @@
 #txtGioiHan_result,
 #txtDaoHam_result,
 #txtBangBienThien_result,
-#txtNhanXet_result
+#txtNhanXet_result,
+#txtDaoHam_,
+#txtDaoHam_tu,
+#txtDaoHam_mau,
+#txtDaoHam_kq
 {
     -fx-padding-left: 50px;
     -fx-fill: #2E5B60;

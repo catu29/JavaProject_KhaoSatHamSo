@@ -231,7 +231,7 @@ public class Polynomial {
         checkLinear();
     }    
     
-    private void checkQuartic()
+    public void checkQuartic()
     { 
         if(polynomial.size() > 3)
         {
@@ -267,7 +267,7 @@ public class Polynomial {
     
     //====
     
-    private void checkCubic()
+    public void checkCubic()
     {
         if(polynomial.size() > 4)
         {
@@ -303,7 +303,7 @@ public class Polynomial {
     
     //===
     
-    private void checkQuadratic()
+    public void checkQuadratic()
     {
         if(polynomial.size() > 3)
         {
@@ -339,7 +339,7 @@ public class Polynomial {
     
     //===
     
-    private void checkLinear()
+    public void checkLinear()
     {
         if(polynomial.size() > 2)
         {

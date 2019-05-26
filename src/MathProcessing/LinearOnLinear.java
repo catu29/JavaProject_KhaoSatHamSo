@@ -25,22 +25,13 @@ public class LinearOnLinear {
     // Check on compacted polynomials
     public boolean isLinearOnLinear()
     {
-        if(nume.getPolynomial().size() > 2 || deno.getPolynomial().size() > 2)
+        nume.checkLinear();
+        if(!nume.isLinear())
+           return false;
+        
+        deno.checkLinear();
+        if(!deno.isLinear())
             return false;
-        
-        for(int n = 0; n < nume.getPolynomial().size(); n++)
-        {
-            Monomial m = nume.getPolynomial().get(n);
-            if(m.getPower() > 1)
-                return false;
-        }
-        
-        for(int d = 0; d < deno.getPolynomial().size(); d++)
-        {
-            Monomial m = deno.getPolynomial().get(d);
-            if(m.getPower() > 1)
-                return false;
-        }
         
         //Check if numerator and denominator have the same root, then return false.
         //Numerator: ax + b

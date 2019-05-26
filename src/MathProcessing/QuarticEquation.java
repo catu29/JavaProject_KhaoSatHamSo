@@ -5,6 +5,8 @@
  */
 package MathProcessing;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author TranCamTu
@@ -18,7 +20,7 @@ public class QuarticEquation extends CommonEquation {
     private double x2; // roots of y'
     
     private double inflectionLeft;
-    private double inflectionRight; // roots of y''
+    private double inflectionRight; // roots of y"
     
     private Fractor root;
 
@@ -48,7 +50,7 @@ public class QuarticEquation extends CommonEquation {
         
         root = a;
         root.reciprocal();
-        root = b.multiply(new Fractor(-1)).multiply(new Fractor(1,2)).multiply(root);
+        root = b.multiply(new Fractor(-1)).multiply(new Fractor(1,2)).multiply(root); //root = -b/2a
     }
     
     @Override
@@ -121,7 +123,7 @@ public class QuarticEquation extends CommonEquation {
 
     @Override
     public String value() {
-        double y = calculate(expression.getPolynomial(), x1);        
+        Fractor y = calculate(root);        
         double distance = Math.abs(x2 - x1);        
         double yL = calculate(expression.getPolynomial(), -distance);
         
@@ -197,4 +199,27 @@ public class QuarticEquation extends CommonEquation {
         
         return str.toString();
     } 
+    
+    public Fractor calculate(Fractor f)
+    {
+        Fractor result = new Fractor();
+        for(int i = 0; i < expression.getPolynomial().size(); i++)
+        {
+            Monomial mono = expression.getPolynomial().get(i);
+            if(mono.getPower() == 4)
+            {
+                result = result.add(mono.getCoefficient().multiply(f).multiply(f));
+            }
+            else if(mono.getPower() == 2)
+            {
+                result = result.add(mono.getCoefficient().multiply(f));
+            }
+            else
+            {
+                result = result.add(mono.getCoefficient());
+            }
+        }
+        
+        return result;
+    }
 }

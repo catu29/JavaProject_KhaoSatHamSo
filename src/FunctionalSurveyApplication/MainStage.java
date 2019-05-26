@@ -61,7 +61,7 @@ public class MainStage extends Application {
         
         Group root = new Group();
         root.getChildren().add(tabPane);
-        root.getStylesheets().add(this.getClass().getResource("tabpanestyle.css").toExternalForm());
+        root.getStylesheets().add(this.getClass().getResource("tabpanestyle.css").toExternalForm());        
         
         Scene scene = new Scene(root);
        
