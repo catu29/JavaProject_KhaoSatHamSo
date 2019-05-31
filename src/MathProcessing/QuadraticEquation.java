@@ -18,6 +18,11 @@ public class QuadraticEquation extends CommonEquation {
         super(poly);
     }
     
+    public Fractor getIX()
+    {
+        return Ix;
+    }
+    
     @Override
     public String limitation()
     {
@@ -52,10 +57,9 @@ public class QuadraticEquation extends CommonEquation {
         delta = delta.subtract(a.multiply(c).multiply(new Fractor(4))); //delta = delta - 4ac
         
         //Ix = -b/2a
-        b.translate(); // -b
         Fractor x = a.multiply(new Fractor(2)); // 2a
         x.reciprocal(); // 1/2a
-        Ix = b.multiply(x); // -b/2a
+        Ix = b.multiply(new Fractor(-1)).multiply(x); // -b/2a
         
         //Iy = -delta/4a
         x = x.multiply(new Fractor(1, 2)); // 1/4a
@@ -84,9 +88,9 @@ public class QuadraticEquation extends CommonEquation {
     public String value() {
         Fractor x1 = Ix.subtract(new Fractor(1));
         Fractor x2 = Ix.add(new Fractor(1));
-        
-        Fractor y = calculate(expression.getPolynomial(), x1);
-        Fractor y1 = calculate(expression.getPolynomial(), x2);
+                
+        Fractor y = calculate(x1);
+        Fractor y1 = calculate(x2);
         
         String str = "Với x = " + x1 + ", y = " + y + ".\n";
         str += "Với x = " + x2 + ", y = " + y1 + ".\n";

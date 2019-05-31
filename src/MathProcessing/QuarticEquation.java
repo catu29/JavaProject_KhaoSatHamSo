@@ -48,9 +48,24 @@ public class QuarticEquation extends CommonEquation {
             }
         }
         
-        root = a;
+        root = new Fractor(a);
         root.reciprocal();
         root = b.multiply(new Fractor(-1)).multiply(new Fractor(1,2)).multiply(root); //root = -b/2a
+    }
+    
+    public Fractor getRoot()
+    {
+        return root;
+    }
+    
+    public double getX1()
+    {
+        return x1;
+    }
+    
+    public double getX2()
+    {
+        return x2;
     }
     
     @Override
@@ -115,24 +130,39 @@ public class QuarticEquation extends CommonEquation {
             else
             {
                 str.append("\nHàm số đồng biến trên (-∞; 0) và nghịch biến trên (0; +∞)");
-            }
+            }            
         }
         
         return str.toString();
     }
 
     @Override
-    public String value() {
-        Fractor y = calculate(root);        
-        double distance = Math.abs(x2 - x1);        
-        double yL = calculate(expression.getPolynomial(), -distance);
+    public String value() {        
+        StringBuffer str = new StringBuffer("Tại x = 0, y = ");        
         
-        StringBuffer str = new StringBuffer("Tại x = 0, y = ");
-        str.append(c.toString());
-        str.append("\nTại x = ").append(x1).append(", y = ").append(y);
-        str.append("\nTại x = ").append(x2).append(", y = ").append(y);
-        str.append("\nTại x = ").append(-distance).append(", y = ").append(yL);
-        str.append("\nTại x = ").append(distance).append(", y = ").append(yL);
+        if(root.isPositive())
+        {
+            Fractor y = calculate(root); 
+            str.append(c.toString());
+            str.append("\nTại x = ").append(x1).append(", y = ").append(y);
+            str.append("\nTại x = ").append(x2).append(", y = ").append(y);
+
+            double distance = Math.abs(x2 - x1);
+            double yL = calculate(-distance);
+            
+            str.append("\nTại x = ").append(-distance).append(", y = ").append(yL);
+            str.append("\nTại x = ").append(distance).append(", y = ").append(yL);            
+        }
+        else
+        {
+            Fractor x1_ = root.subtract(new Fractor(1));
+            Fractor x2_ = root.add(new Fractor(1));
+            Fractor y = calculate(x1_); 
+            str.append(c.toString());
+            str.append("\nTại x = ").append(x1_).append(", y = ").append(y);
+            str.append("\nTại x = ").append(x2_).append(", y = ").append(y);
+
+        }
         
         return str.toString();
     }
@@ -142,7 +172,7 @@ public class QuarticEquation extends CommonEquation {
         Polynomial poly = new Polynomial(expression.getDerivative());
         poly.createDerivative();
         
-        StringBuffer str = new StringBuffer("\nTa có:\ny\" = ");
+        StringBuffer str = new StringBuffer("Ta có:\ny\" = ");
         str.append(poly.derivativeString());
         str.append("\ny\" = 0 <=> ").append(poly.derivativeString()).append(" = 0");
         
@@ -153,7 +183,7 @@ public class QuarticEquation extends CommonEquation {
         {
             inflectionLeft = -Math.abs(1.0*f.getNumerator()/f.getDenominator());
             inflectionRight = Math.abs(1.0*f.getNumerator()/f.getDenominator());
-            double yL = calculate(poly.getPolynomial(), inflectionLeft);
+            double yL = calculate(inflectionLeft);
             
             str.append("\nĐồ thị hàm số có hai điểm uốn: ");
             str.append("I1(").append(inflectionLeft).append(", ").append(yL).append("), ");
@@ -168,7 +198,7 @@ public class QuarticEquation extends CommonEquation {
         {
             if(root.isPositive())
             {
-                double y = calculate(expression.getPolynomial(), x1);
+                double y = calculate(x1);
                 
                 str.append("\nHàm số đạt cực tiểu tại hai điểm: ");
                 str.append("(").append(x1).append(", ").append(y).append("), ");
@@ -184,7 +214,7 @@ public class QuarticEquation extends CommonEquation {
         {
             if(root.isPositive())
             {
-                double y = calculate(expression.getPolynomial(), x1);
+                double y = calculate(x1);
                 
                 str.append("\nHàm số đạt cực đại tại hai điểm: ");
                 str.append("(").append(x1).append(", ").append(y).append("), ");
@@ -200,6 +230,7 @@ public class QuarticEquation extends CommonEquation {
         return str.toString();
     } 
     
+    @Override
     public Fractor calculate(Fractor f)
     {
         Fractor result = new Fractor();

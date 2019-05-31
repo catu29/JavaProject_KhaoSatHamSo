@@ -25,20 +25,25 @@ public abstract class CommonEquation {
         return set;
     }
     
+    public Polynomial getExpression()
+    {
+        return expression;
+    }
+    
     abstract public String variant();    
     abstract public String value();
     abstract public String comment();    
     abstract public String limitation();
 
-    public double calculate(ArrayList<Monomial> arr, double x)
+    public double calculate(double x)
     {
         double sum = 0;
         
-        for(int i = 0; i < arr.size(); i++)
+        for(int i = 0; i < expression.getPolynomial().size(); i++)
         {
-            Fractor f = arr.get(i).getCoefficient();
+            Fractor f = expression.getPolynomial().get(i).getCoefficient();
             double co = f.getNumerator()*1.0/f.getDenominator();
-            double val = Math.pow(x, arr.get(i).getPower());
+            double val = Math.pow(x, expression.getPolynomial().get(i).getPower());
             
             sum += co*val;
         }
@@ -46,17 +51,17 @@ public abstract class CommonEquation {
         return sum;
     }        
     
-    public Fractor calculate(ArrayList<Monomial> arr, Fractor x)
+    public Fractor calculate(Fractor x)
     {
         Fractor sum = new Fractor();
         
-        for(int i = 0; i < arr.size(); i++)
+        for(int i = 0; i < expression.getPolynomial().size(); i++)
         {
-            Fractor f = arr.get(i).getCoefficient();
-            int num = (int)Math.pow(f.getNumerator(), arr.get(i).getPower());
-            int den = (int)Math.pow(f.getDenominator(), arr.get(i).getPower());
+            Fractor f = expression.getPolynomial().get(i).getCoefficient();
+            int num = (int)Math.pow(x.getNumerator(), expression.getPolynomial().get(i).getPower());
+            int den = (int)Math.pow(x.getDenominator(), expression.getPolynomial().get(i).getPower());
             
-            sum.add(f);
+            sum = sum.add(f.multiply(x));
         }
         
         return sum;

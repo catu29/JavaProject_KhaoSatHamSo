@@ -25,7 +25,7 @@ public class CubicEquation extends CommonEquation {
     public CubicEquation(Polynomial poly) {
         super(poly);
            
-        a = new Fractor();
+        a = expression.getPolynomial().get(expression.getPolynomial().size()-1).getCoefficient();
         b = new Fractor();
         c = new Fractor();
         d = new Fractor();
@@ -66,17 +66,38 @@ public class CubicEquation extends CommonEquation {
             x1 = (b1+d)/a1;
             x2 = (b1-d)/a1;
         }
+        
         //Inflection point is the root of y"
         //y' = 3ax^2 + 2bx + c
         //y" = 6ax + 2b
         // => y" = 0 <=> x = -b/3a     
-        Fractor a1 = a;
+        Fractor a1 = new Fractor(a);
         a1.reciprocal();
         
         inflectionPoint = b.multiply(new Fractor(-1)).multiply(a1).multiply(new Fractor(1, 3));
         
     }
     
+    public Fractor getDelta()
+    {
+        return delta;
+    }
+    
+    public Fractor getInflectionPoint()
+    {
+        return inflectionPoint;
+    }
+    
+    public double getX1()
+    {
+        return x1;
+    }
+    
+    public double getX2()
+    {
+        return x2;
+    }
+        
     public String limitation()
     {
         if(a.isPositive())
@@ -101,12 +122,12 @@ public class CubicEquation extends CommonEquation {
                 str.append("=> x1 = ").append(x1).append(", x2 = ").append(x2).append("\n");
                 if(x1 < x2)                {
                     
-                    str.append("Hàm số đồng biết trên (–∞; ").append(x1).append("), (").append(x2).append("; +∞).\n");
+                    str.append("Hàm số đồng biến trên (–∞; ").append(x1).append("), (").append(x2).append("; +∞).\n");
                     str.append("Hàm số nghịch biến trên (").append(x1).append("; ").append(x2).append(").");
                 }
                 else
                 {
-                    str.append("Hàm số đồng biết trên (–∞; ").append(x2).append("), (").append(x1).append("; +∞).\n");
+                    str.append("Hàm số đồng biến trên (–∞; ").append(x2).append("), (").append(x1).append("; +∞).\n");
                     str.append("Hàm số nghịch biến trên (").append(x2).append("; ").append(x1).append(").");
                 }
             }
@@ -134,12 +155,12 @@ public class CubicEquation extends CommonEquation {
                 str.append("=> x1 = ").append(x1).append(", x2 = ").append(x2).append("\n");
                 if(x1 < x2)                
                 {                    
-                    str.append("Hàm số nghịch biết trên (–∞; ").append(x1).append("), (").append(x2).append("; +∞).\n");
+                    str.append("Hàm số nghịch biến trên (–∞; ").append(x1).append("), (").append(x2).append("; +∞).\n");
                     str.append("Hàm số đồng biến trên (").append(x1).append("; ").append(x2).append(").");
                 }
                 else
                 {
-                    str.append("Hàm số nghịch biết trên (–∞; ").append(x2).append("), (").append(x1).append("; +∞).\n");
+                    str.append("Hàm số nghịch biến trên (–∞; ").append(x2).append("), (").append(x1).append("; +∞).\n");
                     str.append("Hàm số đồng biến trên (").append(x2).append("; ").append(x1).append(").");
                 }
             }
@@ -152,7 +173,7 @@ public class CubicEquation extends CommonEquation {
                 }
                 else
                 {
-                    str.append("\nΔ = ").append(delta.toString()).append(" < 0, a = ").append(a.toString()).append(" > 0");
+                    str.append("\nΔ = ").append(delta.toString()).append(" < 0, a = ").append(a.toString()).append(" < 0");
                     str.append("=> y' < 0, ");
                 }
             
@@ -165,18 +186,26 @@ public class CubicEquation extends CommonEquation {
 
     @Override
     public String value() {
-        Fractor y = calculate(expression.getPolynomial(), inflectionPoint);
-        double y1 = calculate(expression.getPolynomial(), x1);
-        double y2 = calculate(expression.getPolynomial(), x2);
-        
-        int distance = (int)Math.abs(inflectionPoint.getNumerator()/inflectionPoint.getDenominator() - x1) + 1; // every point in graph is symmetry by inflection point
-        Fractor yL = calculate(expression.getPolynomial(), new Fractor(-distance)); // Point to the left of inflection point
-        Fractor yR = calculate(expression.getPolynomial(), new Fractor(distance)); // Point to the right of inflection point
+        Fractor y = calculate(inflectionPoint);
+        int distance = (int)Math.abs(inflectionPoint.getNumerator()/inflectionPoint.getDenominator() - 1);
         
         StringBuffer str = new StringBuffer("Tại x = ");
         str.append(inflectionPoint.toString()).append(", y = ").append(y.toString());
-        str.append("\nTại x = ").append(x1).append(", y = ").append(y1);
-        str.append("\nTại x = ").append(x2).append(", y = ").append(y2);
+        
+        if(delta.isPositive())
+        {
+            double y1 = calculate(x1);        
+            double y2 = calculate(x2);
+
+            distance = (int)Math.abs(inflectionPoint.getNumerator()/inflectionPoint.getDenominator() - x1); // every point in graph is symmetry by inflection point
+                   
+            str.append("\nTại x = ").append(x1).append(", y = ").append(y1);
+            str.append("\nTại x = ").append(x2).append(", y = ").append(y2);            
+        }        
+        
+        Fractor yL = calculate(new Fractor(-distance)); // Point to the left of inflection point
+        Fractor yR = calculate(new Fractor(distance)); // Point to the right of inflection point
+
         str.append("\nTại x = ").append(new Fractor(-distance).toString()).append(", y = ").append(yL);
         str.append("\nTại x = ").append(new Fractor(distance).toString()).append(", y = ").append(yR);
         
@@ -193,13 +222,13 @@ public class CubicEquation extends CommonEquation {
         str.append("y\" = 0 <=> ").append(poly.derivativeString()).append(" = 0\n");
         str.append("<=> x = ").append(inflectionPoint.toString()).append("\n");
         
-        Fractor y = calculate(expression.getPolynomial(), inflectionPoint);
+        Fractor y = calculate(inflectionPoint);
         str.append("Đồ thị nhận điểm I(").append(inflectionPoint.toString()).append(", ").append(y.toString()).append(") làm điểm uốn.\n");
         
         if(delta.isPositive())
         {
-            double y1 = calculate(expression.getPolynomial(), x1);
-            double y2 = calculate(expression.getPolynomial(), x2);
+            double y1 = calculate(x1);
+            double y2 = calculate(x2);
             
             if(a.isPositive())
             {

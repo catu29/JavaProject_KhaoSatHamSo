@@ -28,7 +28,6 @@ public class PolynomialTab extends Tab {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainscene.fxml"));
         Parent parent = (Parent) fxmlLoader.load();
         parent.getStylesheets().add(this.getClass().getResource("mainscenestyle.css").toExternalForm());
-        this.setContent(parent);
-        
+        this.setContent(parent);        
     }
 }

@@ -1,5 +1,10 @@
-#anchor-pane{
+
+*{
     -fx-font-family: "Times New Roman";
+    /*-fx-font-size: 18px;*/
+}
+
+#anchor-pane{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
@@ -11,9 +16,6 @@
     -fx-font-family: "Times New Roman";
 }
 
-#paneScene{
-    -fx-font-family: "Times New Roman";
-}
 
 #txtFX{
     -fx-fill: #2E5B60;
@@ -37,17 +39,11 @@
 #txtGioiHan,
 #txtDaoHam,
 #txtBangBienThien,
-#txtNhanXet{
+#txtNhanXet,
+#txtDoThi{
     -fx-fill: #2E5B60;
     -fx-font-size: 18px;
     -fx-font-style: italic;
-}
-
-#txtHamSo
-{
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-fill: #2E5B60;
 }
 
 #txtTXD_result,
@@ -58,13 +54,52 @@
 #txtDaoHam_,
 #txtDaoHam_tu,
 #txtDaoHam_mau,
-#txtDaoHam_kq
+#txtDaoHam_kq,
+#txtDoThi_result
 {
     -fx-padding-left: 50px;
     -fx-fill: #2E5B60;
     -fx-font-size: 16px;
 }
 
+#scroll_ThongTin,
+#anchor_ThongTin,
+#VBox_ThongTin
+{
+    -fx-background-color: white;
+}
+
 #paneGraph{
-    -fx-background-color: #aaa;
+    /*-fx-background-color: #aaa;*/
+}
+
+#iconArrowLeft
+{
+    -fx-graphic: url('./asset/left.png');
+}
+
+#iconArrowRight
+{
+    -fx-graphic: url('./asset/right.png');
+}
+
+#iconArrowUp
+{
+    -fx-graphic: url('./asset/up.png');
+}
+
+#iconArrowDown
+{
+    -fx-graphic: url('./asset/down.png');
+}
+
+.toggle-button
+{
+    -fx-background-color: transparent;
+    -fx-opacity: 0.6;
+}
+
+.toggle-button:hover
+{
+    -fx-opacity: 1;
 }
