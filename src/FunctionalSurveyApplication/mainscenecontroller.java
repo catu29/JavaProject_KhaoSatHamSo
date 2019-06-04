@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -26,8 +27,6 @@ import javafx.scene.text.TextAlignment;
  * @author T-PC
  */
 public class mainscenecontroller{
-    @FXML
-    private Text txtHamSo;
     @FXML
     private TextField txtFieldFX;
     @FXML
@@ -124,7 +123,7 @@ public class mainscenecontroller{
             }   
             else
             {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Phần mềm chưa hỗ trợ tính năng khảo sát cho hàm số này.", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ứng dụng chưa hỗ trợ tính năng khảo sát cho hàm số này.", ButtonType.OK);
                 alert.show();
                 
                 paintGraph();
@@ -159,7 +158,7 @@ public class mainscenecontroller{
         
         double layoutX = 35;        
         double layoutY = 25;
-        double _y = equation.calculate(-5.5);
+        double _y = equation.calculate(minX);
         
         for(double x = minX; x <= maxX; x += 0.125)
         {
@@ -188,6 +187,7 @@ public class mainscenecontroller{
             }
             
             line.setSmooth(true);
+            line.setStroke(Color.BLUE);
             line.setLayoutX(layoutX + (x-(-5.5))*50);
             line.setLayoutY(layoutY - (y-(4.5))*50);
             

@@ -9,61 +9,51 @@ package MathProcessing;
  *
  * @author TranCamTu
  */
-public class LinearOnLinear {
-    private Polynomial nume;
-    private Polynomial deno;
+public class LinearOnLinear extends PolyOnPoly{
     private Fractor derivative;
     private Fractor asymstoreX;
     private Fractor asymstoreY;
     
+    private Fractor a;
+    private Fractor b;
+    private Fractor c;
+    private Fractor d;
+    
     public LinearOnLinear(Polynomial poly1, Polynomial poly2)
     {
-        nume = poly1;
-        deno = poly2;
-    }
-    
-    // Check on compacted polynomials
-    public boolean isLinearOnLinear()
-    {
-        nume.checkLinear();
-        if(!nume.isLinear())
-           return false;
+        super(poly1, poly2);
         
-        deno.checkLinear();
-        if(!deno.isLinear())
-            return false;
+        // f(x) = (ax + b)/(cx + d)
         
-        //Check if numerator and denominator have the same root, then return false.
-        //Numerator: ax + b
-        // => x = -b/a
-        // nu: root of NUmerator polynomial 
-        Fractor nu = new Fractor(nume.getPolynomial().get(1).getCoefficient()); // nu = a
-        nu.reciprocal(); // nu = 1/a;
-        nu = nu.multiply(nume.getPolynomial().get(0).getCoefficient()).multiply(new Fractor(-1)); // nu = 1/a * b * -1
-        nu.simplify();
+        a = new Fractor(nume.getPolynomial().get(nume.getPolynomial().size()-1).getCoefficient());
+        b = new Fractor();
+        if(nume.getPolynomial().size() > 1)
+        {
+            b = new Fractor(nume.getPolynomial().get(0).getCoefficient());
+        }
         
+        c = new Fractor(deno.getPolynomial().get(deno.getPolynomial().size()-1).getCoefficient());
+        d = new Fractor();
+        if(deno.getPolynomial().size() > 1)
+        {
+            d = new Fractor(deno.getPolynomial().get(0).getCoefficient());
+        }
+        
+        // Asymstore x (vertical) value is value of denominator polynomial root.         
         //Denominator: cx + d
         // => x = -d/c
         // de: root of DEnominator polynomial
-        Fractor de = new Fractor(deno.getPolynomial().get(1).getCoefficient()); // de = c
+        
+        Fractor de = new Fractor();
+        de = new Fractor(c); // de = c
         de.reciprocal(); // de = 1/c
-        de = de.multiply(deno.getPolynomial().get(0).getCoefficient()).multiply(new Fractor(-1)); // de = 1/c * d * -1
-        de.simplify();
-                
-        if(nu.getNumerator() == de.getNumerator() && nu.getDenominator() == de.getDenominator())
-            return false;
+        de = de.multiply(d).multiply(new Fractor(-1));
+        de.simplify(); // de = 1/c * d * -1 = -d/c
         
-        // Method return true, calculate values of asymstore x and asymstore y
-        // Asymstore x (vertical) value is value of denominator polynomial root. 
-        asymstoreX = de;        
-        
-        Fractor a = nume.getPolynomial().get(1).getCoefficient();
-        Fractor b = nume.getPolynomial().get(0).getCoefficient();
-        Fractor c = deno.getPolynomial().get(1).getCoefficient();
-        Fractor d = deno.getPolynomial().get(0).getCoefficient();
+        asymstoreX = de; 
         
         // Asymstore y (horizontal) value is a/c
-        asymstoreY = c;
+        asymstoreY = new Fractor(c);
         asymstoreY.reciprocal();
         asymstoreY = asymstoreY.multiply(a);
         asymstoreY.simplify();
@@ -71,8 +61,21 @@ public class LinearOnLinear {
         // Derivative coefficient value is the result of expression ad-bc
         derivative = a.multiply(d).subtract(b.multiply(c));
         derivative.simplify();
-        
-        return true;
+    }   
+    
+    public Fractor getDerivative()
+    {
+        return derivative;
+    }
+    
+    public Fractor getAsymstoreX()
+    {
+        return asymstoreX;
+    }
+    
+    public Fractor getAsymstoreY()
+    {
+        return asymstoreY;
     }
     
     public String getSet()
@@ -119,5 +122,55 @@ public class LinearOnLinear {
     public String comment()
     {
         return "\nĐồ thị không có cực trị.\nĐồ thị nhận I(" + asymstoreX.toString() + ", " + asymstoreY.toString() + ") làm tâm đối xứng.";
+    }
+    
+    public Fractor calculate(Fractor x)
+    {
+        CommonEquation n = new AnotherEquation(nume);
+        Fractor sumN = n.calculate(x);
+        
+        CommonEquation d = new AnotherEquation(deno);
+        Fractor sumD = d.calculate(x);
+        sumD.reciprocal();
+        
+        return sumN.multiply(sumD);
+    }
+    
+    public double calculate(double x)
+    {
+        CommonEquation n = new AnotherEquation(nume);
+        double sumN = n.calculate(x);
+        
+        CommonEquation d = new AnotherEquation(deno);
+        double sumD = d.calculate(x);
+        
+        return sumN/sumD;
+    }
+    
+    public boolean isSimplified()
+    {
+        //Check if numerator and denominator have the same root, then return true.
+        //Numerator: ax + b
+        // => x = -b/a
+        // nu: root of NUmerator polynomial 
+        Fractor nu = new Fractor(a); // nu = a
+        nu.reciprocal(); // nu = 1/a;
+        nu = nu.multiply(b).multiply(new Fractor(-1)); // nu = 1/a * b * -1 = -b/a
+        nu.simplify();
+        System.out.println(nu.toString());
+        
+        //Denominator: cx + d
+        // => x = -d/c
+        // de: root of DEnominator polynomial
+        Fractor de = new Fractor(c); // de = c
+        de.reciprocal(); // de = 1/c
+        de = de.multiply(d).multiply(new Fractor(-1)); // de = 1/c * d * -1 = -d/c
+        de.simplify();
+        System.out.println(de.toString());
+                
+        if(nu.getNumerator() == de.getNumerator() && nu.getDenominator() == de.getDenominator())
+            return true;
+        
+        return false;
     }
 }   

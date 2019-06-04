@@ -89,7 +89,7 @@
                 <Pane fx:id="paneGraph" layoutX="640.0" layoutY="106.0" prefHeight="500.0" prefWidth="620.0" AnchorPane.leftAnchor="666.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="106.0">
                     <children>
                         <!--Painting axises and its notations Area-->
-                        <Line endX="305.0" layoutX="310.0" layoutY="250.0" startX="-305.0" strokeWidth="2.0" />
+                        <Line endX="310.0" fill="BLACK" layoutX="310.0" layoutY="250.0" startX="-310.0" strokeWidth="2.0" />
                         <Line endX="245.0" layoutX="310.0" layoutY="250.0" nodeOrientation="LEFT_TO_RIGHT" rotate="90.0" startX="-245.0" strokeWidth="2.0" />
                         <Line endX="10.0" layoutX="300.0" layoutY="2.0" smooth="false" startY="10.0" strokeWidth="2.0">
                             <rotationAxis>
@@ -101,12 +101,12 @@
                                 <Point3D />
                             </rotationAxis>
                         </Line>
-                        <Line endX="10.0" endY="10.0" layoutX="607.0" layoutY="240.0" strokeWidth="2.0">
+                        <Line endX="10.0" endY="10.0" layoutX="610.0" layoutY="240.0" strokeWidth="2.0">
                             <rotationAxis>
                                 <Point3D />
                             </rotationAxis>
                         </Line>
-                        <Line endX="10.0" layoutX="607.0" layoutY="250.0" startY="10.0" strokeWidth="2.0">
+                        <Line endX="10.0" layoutX="610.0" layoutY="250.0" startY="10.0" strokeWidth="2.0">
                             <rotationAxis>
                                 <Point3D />
                             </rotationAxis>
@@ -188,7 +188,7 @@
                         <Text layoutX="457.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
                         <Text layoutX="507.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
                         <Text layoutX="556.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
-                  <Pane prefHeight="500.0" prefWidth="620.0" />
+                  <Pane fx:id="pane" prefHeight="500.0" prefWidth="620.0" />
                   <ToggleButton fx:id="iconArrowDown" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="2.0" layoutX="552.0" layoutY="64.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
                   <ToggleButton fx:id="iconArrowRight" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="2.0" layoutX="584.0" layoutY="32.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
                   <ToggleButton fx:id="iconArrowUp" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="2.0" layoutX="552.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
@@ -224,6 +224,7 @@
             </Text>
             <Line endX="128.0" layoutX="10.0" layoutY="10.0" rotate="90.0" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="545.0" />
             <Line endX="128.0" layoutX="20.0" layoutY="20.0" rotate="90.0" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="545.0" />
+            <Pane fx:id="paneVariant" layoutX="114.0" layoutY="480.0" prefHeight="129.0" prefWidth="365.0" />
             </children>    
         </AnchorPane>
     </children>

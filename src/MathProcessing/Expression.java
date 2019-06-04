@@ -158,11 +158,11 @@ public class Expression {
             {
                 str.insert(i, '*');
             }
-            
-            if(str.charAt(i) == 'x' && i != (str.length() - 1))
+           
+            if(str.charAt(i-1) == 'x' || str.charAt(i-1) == ')')
             {
-                if(MathStaticMethod.isOperand(Character.toString(expression.charAt(i+1))))
-                    str.insert(i+1, '*');
+                if(MathStaticMethod.isOperand(Character.toString(expression.charAt(i))))
+                    str.insert(i, '*');
             }
             if(str.charAt(i) == '^')
             {
