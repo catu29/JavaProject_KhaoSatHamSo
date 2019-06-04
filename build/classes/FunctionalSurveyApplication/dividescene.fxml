@@ -23,7 +23,7 @@
                 <Button fx:id="btnKhaoSat" layoutX="993.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Khảo sát" />
             <ScrollPane fx:id="scroll_ThongTin" hbarPolicy="NEVER" maxHeight="375.0" maxWidth="630.0" pannable="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="99.0">
               <content>
-                <AnchorPane fx:id="anchor_ThongTin" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                <AnchorPane fx:id="anchor_ThongTin" minHeight="0.0" minWidth="0.0">
                      <children>
                           
                             <VBox fx:id="VBox_ThongTin" maxWidth="610.0" prefWidth="610.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
@@ -54,26 +54,19 @@
                                              </font></Text>
                                        </children>
                                     </VBox>
-                                    <Text fx:id="txtDaoHam_kq" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Text fx:id="txtDaoHam_result" strokeType="OUTSIDE" strokeWidth="0.0" translateY="8.0" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="5.0" left="15.0" top="5.0" />
                                  </VBox.margin>
-                              </HBox>
-                                                    
-                                    <Text fx:id="txtGioiHan" text="3. Giới hạn:" />
-                                    <Text fx:id="txtGioiHan_result">
-                                        <VBox.margin>
-                                            <Insets bottom="5.0" left="15.0" top="5.0" />
-                                        </VBox.margin>
-                                    </Text>                        
-                                    <Text fx:id="txtBangBienThien" text="4. Bảng biến thiên:" /> 
+                              </HBox>                        
+                                    <Text fx:id="txtBangBienThien" text="3. Bảng biến thiên:" /> 
                                     <Text fx:id="txtBangBienThien_result">
                                         <VBox.margin>
                                             <Insets left="15.0" />
                                         </VBox.margin>
                                     </Text>                        
-                                    <Text fx:id="txtNhanXet" text="5. Nhận xét:" />
+                                    <Text fx:id="txtNhanXet" text="4. Nhận xét:" />
                                     <Text fx:id="txtNhanXet_result">
                                         <VBox.margin>
                                             <Insets left="15.0" />

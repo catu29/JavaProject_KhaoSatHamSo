@@ -85,15 +85,15 @@ public class LinearOnLinear extends PolyOnPoly{
     
     public String derivative()
     {
-        String s = "y' = (" + derivative.toString() + ") / (" + deno.getPolynomial().toString() + ")^2";
+//        String s = "y' = (" + derivative.toString() + ") / (" + deno.getPolynomial().toString() + ")^2";
         if(derivative.isPositive())
         {
-            return s + " > 0, ∀x ∈ D.";
+            return " > 0, ∀x ∈ D.";
         }
         
-        return s + " < 0, ∀x ∈ D.";
+        return " < 0, ∀x ∈ D.";
     }
-    
+        
     public String variant()
     {
         StringBuilder str = new StringBuilder("Chiều biến thiên:\nHàm số luôn ");
@@ -121,7 +121,7 @@ public class LinearOnLinear extends PolyOnPoly{
     
     public String comment()
     {
-        return "\nĐồ thị không có cực trị.\nĐồ thị nhận I(" + asymstoreX.toString() + ", " + asymstoreY.toString() + ") làm tâm đối xứng.";
+        return "Đồ thị không có cực trị.\nĐồ thị nhận I(" + asymstoreX.toString() + ", " + asymstoreY.toString() + ") làm tâm đối xứng.";
     }
     
     public Fractor calculate(Fractor x)
@@ -157,7 +157,6 @@ public class LinearOnLinear extends PolyOnPoly{
         nu.reciprocal(); // nu = 1/a;
         nu = nu.multiply(b).multiply(new Fractor(-1)); // nu = 1/a * b * -1 = -b/a
         nu.simplify();
-        System.out.println(nu.toString());
         
         //Denominator: cx + d
         // => x = -d/c
@@ -166,7 +165,6 @@ public class LinearOnLinear extends PolyOnPoly{
         de.reciprocal(); // de = 1/c
         de = de.multiply(d).multiply(new Fractor(-1)); // de = 1/c * d * -1 = -d/c
         de.simplify();
-        System.out.println(de.toString());
                 
         if(nu.getNumerator() == de.getNumerator() && nu.getDenominator() == de.getDenominator())
             return true;

@@ -7,6 +7,7 @@ package FunctionalSurveyApplication;
 
 import MathProcessing.*;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -31,6 +33,18 @@ public class DividesceneController{
     private TextField txtFieldNum;
     @FXML
     private TextField txtFieldDen;
+    @FXML
+    private Text txtTXD_result;
+    @FXML
+    private Text txtDaoHam_tu;
+    @FXML
+    private Text txtDaoHam_mau;
+    @FXML
+    private Text txtDaoHam_result;
+    @FXML
+    private Text txtBangBienThien_result;
+    @FXML
+    private Text txtNhanXet_result;
     @FXML
     private Button btnKhaoSat;
     @FXML
@@ -151,6 +165,16 @@ public class DividesceneController{
                 if(pop.isLinearOnLinear())
                 {
                     pop = new LinearOnLinear(numPoly, denPoly);
+                    
+                    if(!((LinearOnLinear)pop).isSimplified())
+                    {
+                        txtTXD_result.setText(((LinearOnLinear)pop).getSet());
+                        txtDaoHam_tu.setText(((LinearOnLinear)pop).getDerivative().toString());
+                        txtDaoHam_mau.setText("(" + denPoly.toString() + ")^2");
+                        txtDaoHam_result.setText(((LinearOnLinear)pop).derivative());
+                        txtBangBienThien_result.setText(((LinearOnLinear)pop).variant());
+                        txtNhanXet_result.setText(((LinearOnLinear)pop).comment());
+                    }
                     
                     paintVariantTable();                    
                     paintGraph();
@@ -305,5 +329,129 @@ public class DividesceneController{
         
         paneVariant.getChildren().clear();
         
+        Text x = new Text(((LinearOnLinear)pop).getAsymstoreX().toString());
+        x.setFont(Font.font(18));
+        x.setLayoutX(135);
+        x.setLayoutY(20);
+        paneVariant.getChildren().add(x);
+        
+        x = new Text(((LinearOnLinear)pop).getAsymstoreX().toString());
+        x.setFont(Font.font(18));
+        x.setLayoutX(190);
+        x.setLayoutY(20);
+        paneVariant.getChildren().add(x);
+        
+        if(((LinearOnLinear)pop).getDerivative().isPositive())
+        {
+            Text limNegative = new Text("-∞");
+            limNegative.setFont(Font.font(18));
+            limNegative.setLayoutX(5);
+            limNegative.setLayoutY(120);
+            paneVariant.getChildren().add(limNegative);
+
+            Text limPositive = new Text("+∞");
+            limPositive.setFont(Font.font(18));
+            limPositive.setLayoutX(335);
+            limPositive.setLayoutY(45);
+            paneVariant.getChildren().add(limPositive);
+            
+            Text asymValue = new Text(((LinearOnLinear)pop).getAsymstoreY().toString());
+            asymValue.setFont(Font.font(18));
+            asymValue.setLayoutX(135);
+            asymValue.setLayoutY(45);
+            paneVariant.getChildren().add(asymValue);
+            
+            asymValue = new Text(((LinearOnLinear)pop).getAsymstoreY().toString());
+            asymValue.setFont(Font.font(18));
+            asymValue.setLayoutX(190);
+            asymValue.setLayoutY(120);
+            paneVariant.getChildren().add(asymValue);
+            
+            Line line = new Line(0, 0, 100, -50);
+            line.setLayoutX(30);
+            line.setLayoutY(105);
+            paneVariant.getChildren().add(line);
+            
+            Line upArrow = new Line(0, 0, -5, -2);
+            upArrow.setLayoutX(130);
+            upArrow.setLayoutY(55);
+            paneVariant.getChildren().add(upArrow);
+            
+            Line downArrow = new Line(0, 0, -2, 5);
+            downArrow.setLayoutX(130);
+            downArrow.setLayoutY(55);
+            paneVariant.getChildren().add(downArrow);
+            
+            line = new Line(0, 0, 100, -50);
+            line.setLayoutX(215);
+            line.setLayoutY(105);
+            paneVariant.getChildren().add(line);
+            
+            upArrow = new Line(0, 0, -5, -2);
+            upArrow.setLayoutX(315);
+            upArrow.setLayoutY(55);
+            paneVariant.getChildren().add(upArrow);
+            
+            downArrow = new Line(0, 0, -2, 5);
+            downArrow.setLayoutX(315);
+            downArrow.setLayoutY(55);
+            paneVariant.getChildren().add(downArrow);
+        }
+        else
+        {
+            Text limNegative = new Text("-∞");
+            limNegative.setFont(Font.font(18));
+            limNegative.setLayoutX(5);
+            limNegative.setLayoutY(45);
+            paneVariant.getChildren().add(limNegative);
+
+            Text limPositive = new Text("+∞");
+            limPositive.setFont(Font.font(18));
+            limPositive.setLayoutX(335);
+            limPositive.setLayoutY(120);
+            paneVariant.getChildren().add(limPositive);
+            
+            Text asymValue = new Text(((LinearOnLinear)pop).getAsymstoreY().toString());
+            asymValue.setFont(Font.font(18));
+            asymValue.setLayoutX(135);
+            asymValue.setLayoutY(120);
+            paneVariant.getChildren().add(asymValue);
+            
+            asymValue = new Text(((LinearOnLinear)pop).getAsymstoreY().toString());
+            asymValue.setFont(Font.font(18));
+            asymValue.setLayoutX(190);
+            asymValue.setLayoutY(45);
+            paneVariant.getChildren().add(asymValue);
+            
+            Line line = new Line(0, 0, 100, 50);
+            line.setLayoutX(30);
+            line.setLayoutY(60);
+            paneVariant.getChildren().add(line);
+            
+            Line downArrow = new Line(0, 0, -5, 2);
+            downArrow.setLayoutX(130);
+            downArrow.setLayoutY(110);
+            paneVariant.getChildren().add(downArrow);
+            
+            Line upArrow = new Line(0, 0, -2, -5);
+            upArrow.setLayoutX(130);
+            upArrow.setLayoutY(110);
+            paneVariant.getChildren().add(upArrow);
+            
+            line = new Line(0, 0, 100, 50);
+            line.setLayoutX(215);
+            line.setLayoutY(60);
+            paneVariant.getChildren().add(line);
+            
+            downArrow = new Line(0, 0, -5, 2);
+            downArrow.setLayoutX(315);
+            downArrow.setLayoutY(110);
+            paneVariant.getChildren().add(downArrow);
+            
+            upArrow = new Line(0, 0, -2, -5);
+            upArrow.setLayoutX(315);
+            upArrow.setLayoutY(110);
+            paneVariant.getChildren().add(upArrow);
+        }
     }
 }
