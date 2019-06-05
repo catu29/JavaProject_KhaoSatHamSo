@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -44,9 +45,29 @@ public class mainscenecontroller{
     @FXML
     private Button btnKhaoSat;
     @FXML
-    private Pane paneScene;
+    private Line Ox;
     @FXML
-    private Pane pane;  
+    private Line Oy;
+    @FXML
+    private Text O;
+    @FXML
+    private ToggleButton iconArrowLeft;
+    @FXML
+    private ToggleButton iconArrowRight;
+    @FXML
+    private ToggleButton iconArrowUp;
+    @FXML
+    private ToggleButton iconArrowDown;
+    @FXML
+    private Pane pane;
+    @FXML
+    private Pane paneOx;
+    @FXML
+    private Pane paneOy;
+    @FXML
+    private Pane paneOxValues;
+    @FXML
+    private Pane paneOyValues;
     @FXML
     private Pane paneVariant;
     
@@ -85,8 +106,554 @@ public class mainscenecontroller{
         });
     }
     
+    //Axis
+    // x values: layoutX - 5; layoutY + 20
+    // y values: layoutX - 10; layoutY + 5
+    
+    @FXML
+    public void iconArrowLeftOnAction()
+    {
+        iconArrowLeft.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getButton() == MouseButton.PRIMARY)
+                {
+                    moveLeft();
+                    
+                    paintGraph();
+                }
+            }
+        });
+    }
+    
+    @FXML
+    public void iconArrowRightOnAction()
+    {
+        iconArrowRight.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getButton() == MouseButton.PRIMARY)
+                {
+                    moveRight();
+                    
+                    paintGraph();
+                }
+            }
+        });
+    }
+    
+    @FXML
+    public void iconArrowUpOnAction()
+    {
+        iconArrowUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getButton() == MouseButton.PRIMARY)
+                {
+                    moveUp();
+                    
+                    paintGraph();
+                }
+            }
+        });
+    }
+    
+    @FXML
+    public void iconArrowDownOnAction()
+    {
+        iconArrowDown.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getButton() == MouseButton.PRIMARY)
+                {
+                    moveDown();
+                    
+                    paintGraph();
+                }
+            }
+        });
+    }
+    
+    private void reset()
+    {
+        iconArrowLeft.setDisable(true);
+        iconArrowRight.setDisable(true);
+        iconArrowUp.setDisable(true);
+        iconArrowDown.setDisable(true);
+
+        minX = -5.5;
+        maxX = 5.5;
+        minY = -4.5;
+        maxY = 4.5;
+        
+        O.setLayoutX(292);
+        O.setLayoutY(245);
+        O.setVisible(true);
+        
+        pane.getChildren().clear();
+        
+        if(Oy.getLayoutX() < 310)
+        {
+            double distanceX = (310 - Oy.getLayoutX());
+            
+            for(int i = 0; i < paneOy.getChildren().size(); i++)
+            {
+                paneOy.getChildren().get(i).setLayoutX(paneOy.getChildren().get(i).getLayoutX() + distanceX);
+                paneOy.getChildren().get(i).setVisible(true);
+            }
+            
+            for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+            {
+                paneOyValues.getChildren().get(i).setLayoutX(paneOyValues.getChildren().get(i).getLayoutX() + distanceX);
+                double yValue = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+                
+                if(yValue == 0)
+                {
+                    paneOyValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOyValues.getChildren().get(i).setVisible(true);
+                }
+            }
+            
+            for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+            {
+                double xValue = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+                xValue -= distanceX/50;
+                
+                ((Text)paneOxValues.getChildren().get(i)).setText(String.valueOf(xValue));
+                
+                if(xValue == 0)
+                {
+                    paneOxValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOxValues.getChildren().get(i).setVisible(true);
+                }
+            }            
+        }
+        else
+        {
+            double distanceX = (Oy.getLayoutX() - 310);
+            
+            for(int i = 0; i < paneOy.getChildren().size(); i++)
+            {
+                paneOy.getChildren().get(i).setLayoutX(paneOy.getChildren().get(i).getLayoutX() - distanceX);
+                paneOy.getChildren().get(i).setVisible(true);
+            }
+            
+            for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+            {
+                paneOyValues.getChildren().get(i).setLayoutX(paneOyValues.getChildren().get(i).getLayoutX() - distanceX);
+                double yValue = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+                
+                if(yValue == 0)
+                {
+                    paneOyValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOyValues.getChildren().get(i).setVisible(true);
+                }
+            }
+            
+            for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+            {
+                double xValue = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+                xValue += distanceX/50;
+                
+                ((Text)paneOxValues.getChildren().get(i)).setText(String.valueOf(xValue));
+                
+                if(xValue == 0)
+                {
+                    paneOxValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOxValues.getChildren().get(i).setVisible(true);
+                }
+            }  
+        }
+        
+        if(Ox.getLayoutY() < 250)
+        {
+            double distanceY = 250 - Ox.getLayoutY();
+            
+            for(int i = 0; i < paneOx.getChildren().size(); i++)
+            {
+                paneOx.getChildren().get(i).setLayoutY(paneOx.getChildren().get(i).getLayoutY() + distanceY);
+                paneOx.getChildren().get(i).setVisible(true);
+            }
+            
+            for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+            {
+                paneOxValues.getChildren().get(i).setLayoutY(paneOxValues.getChildren().get(i).getLayoutY() + distanceY);
+                
+                double xValue = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+                if(xValue == 0)
+                {
+                    paneOxValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOxValues.getChildren().get(i).setVisible(true);
+                }
+            }
+            
+            for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+            {
+                double yValue = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+                yValue += distanceY/50;
+                
+                ((Text)paneOyValues.getChildren().get(i)).setText(String.valueOf(yValue));
+                
+                if(yValue == 0)
+                {
+                    paneOyValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOyValues.getChildren().get(i).setVisible(true);
+                }
+            }
+        }
+        else
+        {
+            double distanceY = Ox.getLayoutY() - 250;
+            
+            for(int i = 0; i < paneOx.getChildren().size(); i++)
+            {
+                paneOx.getChildren().get(i).setLayoutY(paneOx.getChildren().get(i).getLayoutY() - distanceY);
+                paneOx.getChildren().get(i).setVisible(true);
+            }
+            
+            for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+            {
+                paneOxValues.getChildren().get(i).setLayoutY(paneOxValues.getChildren().get(i).getLayoutY() - distanceY);
+                
+                double xValue = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+                if(xValue == 0)
+                {
+                    paneOxValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOxValues.getChildren().get(i).setVisible(true);
+                }
+            }
+            
+            for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+            {
+                double yValue = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+                yValue -= distanceY/50;
+                
+                ((Text)paneOyValues.getChildren().get(i)).setText(String.valueOf(yValue));
+                
+                if(yValue == 0)
+                {
+                    paneOyValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOyValues.getChildren().get(i).setVisible(true);
+                }
+            }
+        }        
+    }
+    
+    private void moveRight()
+    {
+        minX -= 0.5;
+        maxX -= 0.5;
+
+        O.setLayoutX(O.getLayoutX() + 25); // Move 0.5 point
+        if(O.getLayoutX() > 585)
+        {
+            O.setVisible(false);
+        }
+        else
+        {
+            O.setVisible(true);
+        }
+
+        for(int i = 0; i < paneOy.getChildren().size(); i++)
+        {
+            double layoutX = paneOy.getChildren().get(i).getLayoutX();
+            paneOy.getChildren().get(i).setLayoutX(layoutX + 25);
+            
+            if(paneOy.getChildren().get(i).getLayoutX() > 585)
+            {
+                paneOy.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOy.getChildren().get(i).setVisible(true);
+            }
+        }
+
+        for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+        {
+            double layoutX = paneOyValues.getChildren().get(i).getLayoutX();
+            paneOyValues.getChildren().get(i).setLayoutX(layoutX + 25); // Move 0.5 point
+            
+            if(paneOyValues.getChildren().get(i).getLayoutX() > 585)
+            {
+                paneOyValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                double value = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+                
+                if(value == 0)
+                {
+                    paneOyValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOyValues.getChildren().get(i).setVisible(true);
+                }
+            }            
+        }
+
+        for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+        {
+            double value = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+            value -= 0.5;
+
+            ((Text)paneOxValues.getChildren().get(i)).setText(String.valueOf(value));
+
+            if(value == 0)
+            {
+                paneOxValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOxValues.getChildren().get(i).setVisible(true);
+            }    
+        }
+    }
+    
+    private void moveLeft()
+    {
+        minX += 0.5;
+        maxX += 0.5;
+
+        O.setLayoutX(O.getLayoutX() - 25); // Move 0.5 point
+        if(O.getLayoutX() < 15)
+        {
+            O.setVisible(false);
+        }
+        else
+        {
+            O.setVisible(true);
+        }     
+
+        for(int i = 0; i < paneOy.getChildren().size(); i++)
+        {
+            double layoutX = paneOy.getChildren().get(i).getLayoutX();
+            paneOy.getChildren().get(i).setLayoutX(layoutX - 25);
+            
+            if(paneOy.getChildren().get(i).getLayoutX() < 15)
+            {
+                paneOy.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOy.getChildren().get(i).setVisible(true);
+            }
+        }
+
+        for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+        {
+            double layoutX = paneOyValues.getChildren().get(i).getLayoutX();
+            paneOyValues.getChildren().get(i).setLayoutX(layoutX - 25); // Move 0.5 point
+            
+            if(paneOyValues.getChildren().get(i).getLayoutX() < 15)
+            {
+                paneOyValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                double value = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+                
+                if(value == 0)
+                {
+                    paneOyValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOyValues.getChildren().get(i).setVisible(true);
+                }
+            }            
+        }
+
+        for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+        {
+            double value = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+            value += 0.5;
+
+            ((Text)paneOxValues.getChildren().get(i)).setText(String.valueOf(value));
+
+            if(value == 0)
+            {
+                paneOxValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOxValues.getChildren().get(i).setVisible(true);
+            }    
+        }
+    }
+    
+    private void moveUp()
+    {
+        minY -= 0.5;
+        maxY -= 0.5;
+
+        O.setLayoutY(O.getLayoutY() - 25); // Move 0.5 point
+        if(O.getLayoutY() < 25)
+        {
+            O.setVisible(false);
+        }
+        else
+        {
+            O.setVisible(true);
+        }
+
+        for(int i = 0; i < paneOx.getChildren().size(); i++)
+        {
+            double layoutY = paneOx.getChildren().get(i).getLayoutY();
+            paneOx.getChildren().get(i).setLayoutY(layoutY - 25);
+            
+            if(paneOx.getChildren().get(i).getLayoutY() < 25)
+            {
+                paneOx.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOx.getChildren().get(i).setVisible(true);
+            }
+        }
+
+        for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+        {
+            double layoutY = paneOxValues.getChildren().get(i).getLayoutY();
+            paneOxValues.getChildren().get(i).setLayoutY(layoutY - 25); // Move 0.5 point
+            
+            if(paneOxValues.getChildren().get(i).getLayoutY() < 25)
+            {
+                paneOxValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                double value = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+                
+                if(value == 0)
+                {
+                    paneOxValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOxValues.getChildren().get(i).setVisible(true);
+                }
+            }            
+        }
+
+        for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+        {
+            double value = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+            value -= 0.5;
+
+            ((Text)paneOyValues.getChildren().get(i)).setText(String.valueOf(value));
+
+            if(value == 0)
+            {
+                paneOyValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOyValues.getChildren().get(i).setVisible(true);
+            }    
+        }
+    }
+    
+    private void moveDown()
+    {
+        minY += 0.5;
+        maxY += 0.5;
+
+        O.setLayoutY(O.getLayoutY() + 25); // Move 0.5 point
+        if(O.getLayoutY() > 475)
+        {
+            O.setVisible(false);
+        }
+        else
+        {
+            O.setVisible(true);
+        }
+
+        for(int i = 0; i < paneOx.getChildren().size(); i++)
+        {
+            double layoutY = paneOx.getChildren().get(i).getLayoutY();
+            paneOx.getChildren().get(i).setLayoutY(layoutY + 25);
+            
+            if(paneOx.getChildren().get(i).getLayoutY() > 457)
+            {
+                paneOx.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOx.getChildren().get(i).setVisible(true);
+            }
+        }
+
+        for(int i = 0; i < paneOxValues.getChildren().size(); i++)
+        {
+            double layoutY = paneOxValues.getChildren().get(i).getLayoutY();
+            paneOxValues.getChildren().get(i).setLayoutY(layoutY + 25); // Move 0.5 point
+            
+            if(paneOxValues.getChildren().get(i).getLayoutY() > 475)
+            {
+                paneOxValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                double value = Double.parseDouble(((Text)paneOxValues.getChildren().get(i)).getText());
+                
+                if(value == 0)
+                {
+                    paneOxValues.getChildren().get(i).setVisible(false);
+                }
+                else
+                {
+                    paneOxValues.getChildren().get(i).setVisible(true);
+                }
+            }            
+        }
+
+        for(int i = 0; i < paneOyValues.getChildren().size(); i++)
+        {
+            double value = Double.parseDouble(((Text)paneOyValues.getChildren().get(i)).getText());
+            value += 0.5;
+
+            ((Text)paneOyValues.getChildren().get(i)).setText(String.valueOf(value));
+
+            if(value == 0)
+            {
+                paneOyValues.getChildren().get(i).setVisible(false);
+            }
+            else
+            {
+                paneOyValues.getChildren().get(i).setVisible(true);
+            }    
+        }
+    }
+    
     private void process()
     {
+        reset();
         Expression exp = new Expression(txtFieldFX.getText());
 
         if(!exp.isValid())
@@ -96,6 +663,11 @@ public class mainscenecontroller{
         }
         else
         {
+            iconArrowLeft.setDisable(false);
+            iconArrowRight.setDisable(false);
+            iconArrowUp.setDisable(false);
+            iconArrowDown.setDisable(false);
+
             exp.standardize();
 
             Polynomial poly = new Polynomial();
@@ -170,6 +742,20 @@ public class mainscenecontroller{
                 continue;
             }
             
+//            if(y > maxY || y < minY)
+//            {
+//                _y = y;
+//                continue;
+//            }
+//            else if(_y < minY && y > minY)
+//            {
+//                _y = minY;
+//            }
+//            else if(y < maxY && _y > maxY)
+//            {
+//                _y = maxY;
+//            }
+            
             Line line = new Line();
             if(pane.getChildren().size() != 0)
             {
@@ -188,8 +774,8 @@ public class mainscenecontroller{
             
             line.setSmooth(true);
             line.setStroke(Color.BLUE);
-            line.setLayoutX(layoutX + (x-(-5.5))*50);
-            line.setLayoutY(layoutY - (y-(4.5))*50);
+            line.setLayoutX(layoutX + (x-(minX))*50);
+            line.setLayoutY(layoutY - (y-(maxY))*50);
             
             pane.getChildren().add(line);
             _y = y;

@@ -20,7 +20,7 @@
                 <TextField fx:id="txtFieldNum" layoutX="390.0" layoutY="9.0" onKeyPressed="#numOnKeyPress" prefHeight="30.0" prefWidth="584.0" promptText="Nhập phương trình tử và nhấn enter" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="9.0" />                
                 <TextField fx:id="txtFieldDen" layoutX="390.0" layoutY="50.0" onKeyPressed="#denOnKeyPress" prefHeight="30.0" prefWidth="584.0" promptText="Nhập phương trình mẫu và nhấn enter" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="50.0" />                
                 <Line endX="484.0" layoutX="490.0" layoutY="44.0" startX="-100.0" stroke="#2e5b60" strokeMiterLimit="0.0" strokeWidth="2.0" />
-                <Button fx:id="btnKhaoSat" layoutX="993.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Khảo sát" />
+                <Button fx:id="btnKhaoSat" layoutX="993.0" layoutY="33.0" mnemonicParsing="false" onMouseClicked="#btnOnAction" prefHeight="30.0" prefWidth="80.0" text="Khảo sát" />
             <ScrollPane fx:id="scroll_ThongTin" hbarPolicy="NEVER" maxHeight="375.0" maxWidth="630.0" pannable="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="99.0">
               <content>
                 <AnchorPane fx:id="anchor_ThongTin" minHeight="0.0" minWidth="0.0">
@@ -81,111 +81,115 @@
               
                 <Pane fx:id="paneGraph" layoutX="640.0" layoutY="106.0" prefHeight="500.0" prefWidth="620.0" AnchorPane.leftAnchor="666.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="106.0">
                     <children>
-                        <!--Painting axises and its notations Area-->
-                        <Line endX="310.0" fill="BLACK" layoutX="310.0" layoutY="250.0" startX="-310.0" strokeWidth="2.0" />
-                        <Line endX="245.0" layoutX="310.0" layoutY="250.0" nodeOrientation="LEFT_TO_RIGHT" rotate="90.0" startX="-245.0" strokeWidth="2.0" />
-                        <Line endX="10.0" layoutX="300.0" layoutY="2.0" smooth="false" startY="10.0" strokeWidth="2.0">
-                            <rotationAxis>
-                                <Point3D />
-                            </rotationAxis>
-                        </Line>
-                        <Line endX="10.0" endY="10.0" layoutX="310.0" layoutY="2.0" smooth="false" strokeWidth="2.0">
-                            <rotationAxis>
-                                <Point3D />
-                            </rotationAxis>
-                        </Line>
-                        <Line endX="10.0" endY="10.0" layoutX="610.0" layoutY="240.0" strokeWidth="2.0">
-                            <rotationAxis>
-                                <Point3D />
-                            </rotationAxis>
-                        </Line>
-                        <Line endX="10.0" layoutX="610.0" layoutY="250.0" startY="10.0" strokeWidth="2.0">
-                            <rotationAxis>
-                                <Point3D />
-                            </rotationAxis>
-                        </Line>
-                        <Text layoutX="296.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="O">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Text>
-                        <Text layoutX="321.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="y">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Text>
-                        <Text layoutX="606.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="x">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Text>
-                        
-                        <!--Lines for Coefficients on axises Area-->
-                        <Line endX="5.0" layoutX="310.0" layoutY="25.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="50.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="75.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="100.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="125.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="150.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="175.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="200.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="225.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="275.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="300.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="325.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="350.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="375.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="400.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="425.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="450.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="310.0" layoutY="475.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="35.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="60.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="85.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="110.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="135.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="160.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="185.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="210.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="235.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="260.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="285.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="335.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="360.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="385.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="410.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="435.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="460.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="485.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="510.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="535.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="560.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        <Line endX="5.0" layoutX="585.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
-                        
-                        <!--Coefficients on axises Area-->
-                        <Text layoutX="295.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
-                        <Text layoutX="295.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
-                        <Text layoutX="293.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
-                        <Text layoutX="294.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
-                        <Text layoutX="290.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" />
-                        <Text layoutX="289.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-2" />
-                        <Text layoutX="288.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-3" />
-                        <Text layoutX="287.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-4" />
-                        <Text layoutX="53.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-5" />
-                        <Text layoutX="103.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-4" />
-                        <Text layoutX="153.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-3" />
-                        <Text layoutX="203.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-2" />
-                        <Text layoutX="253.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" />
-                        <Text layoutX="356.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
-                        <Text layoutX="407.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
-                        <Text layoutX="457.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
-                        <Text layoutX="507.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
-                        <Text layoutX="556.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+                  <Pane fx:id="paneOy" prefHeight="500.0" prefWidth="620.0">
+                     <children>
+                              <Text layoutX="290.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="y">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                              <Line fx:id="Oy" endX="250.0" layoutX="310.0" layoutY="250.0" nodeOrientation="LEFT_TO_RIGHT" rotate="90.0" startX="-250.0" strokeWidth="2.0" />
+                              <Line endX="10.0" layoutX="300.0" smooth="false" startY="10.0" strokeWidth="2.0" />
+                              <Line endX="10.0" endY="10.0" layoutX="310.0" smooth="false" strokeWidth="2.0" />
+                              
+                              <!--Lines for Coefficients on axises Area-->
+                              <Line endX="5.0" layoutX="310.0" layoutY="25.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="50.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="75.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="100.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="125.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="150.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="175.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="200.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="225.0" startX="-5.0" />
+                        <Line endX="5.0" layoutX="310.0" layoutY="250.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="275.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="300.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="325.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="350.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="375.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="400.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="425.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="450.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="310.0" layoutY="475.0" startX="-5.0" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="paneOx" prefHeight="500.0" prefWidth="620.0">
+                     <children>
+                              <Text layoutX="610.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="x">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                              <!--Painting axises and its notations Area-->
+                              <Line fx:id="Ox" endX="310.0" fill="BLACK" layoutX="310.0" layoutY="250.0" startX="-310.0" strokeWidth="2.0" />
+                              <Line endX="10.0" endY="10.0" layoutX="610.0" layoutY="240.0" strokeWidth="2.0" />
+                              <Line endX="10.0" layoutX="610.0" layoutY="250.0" startY="10.0" strokeWidth="2.0" />
+                              <Line endY="5.0" layoutX="35.0" layoutY="250.0" startY="-5.0" />
+                              <Line endY="5.0" layoutX="60.0" layoutY="250.0" startY="-5.0" />
+                              <Line endX="5.0" layoutX="85.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="110.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="135.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="160.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="185.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="210.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="235.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="260.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="285.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                        <Line endX="5.0" layoutX="310.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="335.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="360.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="385.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="410.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="435.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="460.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="485.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="510.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="535.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="560.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                              <Line endX="5.0" layoutX="585.0" layoutY="250.0" rotate="90.0" startX="-5.0" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="paneOxValues" prefHeight="500.0" prefWidth="620.0">
+                     <children>
+                              <Text layoutX="50.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-5" />
+                              <Text layoutX="100.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-4" />
+                              <Text layoutX="150.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-3" />
+                              <Text layoutX="200.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-2" />
+                              <Text layoutX="250.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" />
+                        <Text layoutX="305.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" visible="false" />
+                              <Text layoutX="355.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+                              <Text layoutX="405.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+                              <Text layoutX="455.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+                              <Text layoutX="505.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+                              <Text layoutX="555.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="paneOyValues" prefHeight="500.0" prefWidth="620.0">
+                     <children>
+                              
+                              <!--Coefficients on axises Area-->
+                              <Text layoutX="320.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+                              <Text layoutX="320.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+                              <Text layoutX="320.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+                              <Text layoutX="320.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+                        <Text layoutX="320.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" visible="false" />
+                              <Text layoutX="320.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" />
+                              <Text layoutX="320.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-2" />
+                              <Text layoutX="320.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-3" />
+                              <Text layoutX="320.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-4" />
+                     </children>
+                  </Pane>
                   <Pane fx:id="pane" prefHeight="500.0" prefWidth="620.0" />
-                  <ToggleButton fx:id="iconArrowDown" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="2.0" layoutX="552.0" layoutY="64.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
-                  <ToggleButton fx:id="iconArrowRight" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="2.0" layoutX="584.0" layoutY="32.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
-                  <ToggleButton fx:id="iconArrowUp" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="2.0" layoutX="552.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
-                  <ToggleButton fx:id="iconArrowLeft" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="0.0" layoutX="520.0" layoutY="32.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
+                        <Text fx:id="O" layoutX="292.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16;" text="O">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                  <ToggleButton fx:id="iconArrowDown" contentDisplay="GRAPHIC_ONLY" disable="true" ellipsisString="" graphicTextGap="2.0" layoutX="552.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#iconArrowDownOnAction" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
+                  <ToggleButton fx:id="iconArrowRight" contentDisplay="GRAPHIC_ONLY" disable="true" ellipsisString="" graphicTextGap="2.0" layoutX="584.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#iconArrowRightOnAction" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
+                  <ToggleButton fx:id="iconArrowUp" contentDisplay="GRAPHIC_ONLY" disable="true" ellipsisString="" graphicTextGap="2.0" layoutX="552.0" mnemonicParsing="false" onMouseClicked="#iconArrowUpOnAction" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
+                  <ToggleButton fx:id="iconArrowLeft" contentDisplay="GRAPHIC_ONLY" disable="true" ellipsisString="" graphicTextGap="0.0" layoutX="520.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#iconArrowLeftOnAction" prefHeight="24.0" prefWidth="24.0" text="ToggleButton" textAlignment="CENTER" textOverrun="CLIP" />
                     </children>
                 </Pane>
                 
