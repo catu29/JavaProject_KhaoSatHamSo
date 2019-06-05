@@ -5,7 +5,10 @@
  */
 package FunctionalSurveyApplication;
 
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -19,30 +22,12 @@ import javafx.scene.paint.Color;
  * @author TranCamTu
  */
 public class PolynomialTab extends Tab {
-    Label instruction = new Label();
-    TextField inputPolynomial = new TextField();
-    Button submit = new Button();
     
-    void arrangeControls()
+    void arrangeControls() throws IOException
     {
-        VBox mainLayout = new VBox();
-        HBox inputLayout = new HBox();
-        
-        inputLayout.getChildren().addAll(inputPolynomial, submit);
-        mainLayout.getChildren().addAll(instruction, inputLayout);
-        
-        instruction.setText("Nhập vào đa thức bậc 1, bậc 2, bậc 3 hoặc trùng phương. Lưu ý:\n"
-                + "- Chỉ nhận các toán tử +, -, *, /, ^ và ngoặc tròn \"()\".\n"
-                + "- Ứng dụng không thể giải quyết các đa thức ngoài các loại đã nêu trên.\n"
-                + "- Chỉ chấp nhận hàm số dạng y = f(x).");
-        instruction.setTextFill(Color.RED);
-        instruction.setWrapText(true);
-        
-        submit.setText("Nhập");
-        submit.setPrefSize(50, 10);
-        submit.setAlignment(Pos.CENTER);
-        inputPolynomial.setPrefSize(500, 10);
-        
-        this.setContent(mainLayout);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainscene.fxml"));
+        Parent parent = (Parent) fxmlLoader.load();
+        parent.getStylesheets().add(this.getClass().getResource("mainscenestyle.css").toExternalForm());
+        this.setContent(parent);        
     }
 }

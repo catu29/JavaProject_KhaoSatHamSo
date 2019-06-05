@@ -59,10 +59,10 @@ public class Expression {
     
     public boolean isValid()
     {
-        expression.trim();
-        expression.replaceAll("\\s+", "");
-        expression.trim();
-        expression.toLowerCase();
+        expression = expression.trim();
+        expression = expression.replaceAll("\\s+", "");
+        expression = expression.trim();
+        expression = expression.toLowerCase();
         
         int countIn = 0;
         int countOut = 0;
@@ -145,7 +145,6 @@ public class Expression {
     public void standardize()
     {
         StringBuilder str = new StringBuilder(expression);
-        String interger = ""; 
         
         if(str.charAt(0) == '-' && (str.charAt(1) == 'x' || str.charAt(1) == '('))
         {
@@ -159,10 +158,11 @@ public class Expression {
             {
                 str.insert(i, '*');
             }
-            
-            if(str.charAt(i) == 'x' && MathStaticMethod.isOperand(Character.toString(expression.charAt(i+1))))
+           
+            if(str.charAt(i-1) == 'x' || str.charAt(i-1) == ')')
             {
-                str.insert(i+1, '*');
+                if(MathStaticMethod.isOperand(Character.toString(expression.charAt(i))))
+                    str.insert(i, '*');
             }
             if(str.charAt(i) == '^')
             {
@@ -173,6 +173,7 @@ public class Expression {
                     {
                         in += Character.toString(str.charAt(j));
                         str.deleteCharAt(j);
+                        j--;
                     }
                     else
                     {
@@ -209,7 +210,7 @@ public class Expression {
                 str.replace(i-1, i+1, "+");                
             }
             
-            expression = new String(str);
+            expression = str.toString();
         }
     }
     
@@ -237,10 +238,17 @@ public class Expression {
             {
                 integer += c;
 
-                if(!MathStaticMethod.isOperand(Character.toString(expression.charAt(i+1))))
+                if(i != (expression.length()-1))
+                {
+                    if(!MathStaticMethod.isOperand(Character.toString(expression.charAt(i+1))))
+                    {
+                        rpn.add(integer);
+                        integer = "";                   
+                    }
+                }
+                else
                 {
                     rpn.add(integer);
-                    integer = "";                   
                 }
             }
             else if(c.equals(")"))

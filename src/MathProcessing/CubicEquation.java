@@ -17,7 +17,7 @@ public class CubicEquation extends CommonEquation {
     private Fractor c;
     private Fractor d;
     
-    private Fractor inflectionPoint; // root of y''
+    private Fractor inflectionPoint; // root of y"
     private Fractor delta; // for finding root(s) of y'
     private double x1;
     private double x2; // roots of y'
@@ -25,7 +25,7 @@ public class CubicEquation extends CommonEquation {
     public CubicEquation(Polynomial poly) {
         super(poly);
            
-        a = new Fractor();
+        a = expression.getPolynomial().get(expression.getPolynomial().size()-1).getCoefficient();
         b = new Fractor();
         c = new Fractor();
         d = new Fractor();
@@ -66,17 +66,38 @@ public class CubicEquation extends CommonEquation {
             x1 = (b1+d)/a1;
             x2 = (b1-d)/a1;
         }
-        //Inflection point is the root of y''
+        
+        //Inflection point is the root of y"
         //y' = 3ax^2 + 2bx + c
-        //y'' = 6ax + 2b
-        // => y''=0 <=> x = -b/3a     
-        Fractor a1 = a;
+        //y" = 6ax + 2b
+        // => y" = 0 <=> x = -b/3a     
+        Fractor a1 = new Fractor(a);
         a1.reciprocal();
         
-        inflectionPoint = b.multiply(new Fractor(-1)).multiply(a1).multiply(new Fractor(1,3));
+        inflectionPoint = b.multiply(new Fractor(-1)).multiply(a1).multiply(new Fractor(1, 3));
         
     }
     
+    public Fractor getDelta()
+    {
+        return delta;
+    }
+    
+    public Fractor getInflectionPoint()
+    {
+        return inflectionPoint;
+    }
+    
+    public double getX1()
+    {
+        return x1;
+    }
+    
+    public double getX2()
+    {
+        return x2;
+    }
+        
     public String limitation()
     {
         if(a.isPositive())
@@ -91,56 +112,23 @@ public class CubicEquation extends CommonEquation {
     public String variant() {
         expression.createDerivative();
         StringBuffer str = new StringBuffer("");
-        str.append("Ta có:\n").append("y'=").append(expression.derivativeString());
-        str.append("\ny'=0 <=> ").append(expression.derivativeString()).append("=0");
+        str.append("Ta có:\n").append("y' = ").append(expression.derivativeString());
+        str.append("\ny' = 0 <=> ").append(expression.derivativeString()).append(" = 0");
         if(a.isPositive())
         {
             if(delta.isPositive())
             {
-                str.append("Δ = ").append(delta.toString()).append(" > 0.\n");
-                str.append("=> x1=").append(x1).append(", x2=").append(x2).append("\n");
+                str.append("\nΔ = ").append(delta.toString()).append(" > 0.\n");
+                str.append("=> x1 = ").append(x1).append(", x2 = ").append(x2).append("\n");
                 if(x1 < x2)                {
                     
-                    str.append("Hàm số đồng biết trên (–∞;").append(x1).append("), (").append(x2).append(";+∞).\n");
-                    str.append("Hàm số nghịch biến trên (").append(x1).append(";").append(x2).append(").");
+                    str.append("Hàm số đồng biến trên (–∞; ").append(x1).append("), (").append(x2).append("; +∞).\n");
+                    str.append("Hàm số nghịch biến trên (").append(x1).append("; ").append(x2).append(").");
                 }
                 else
                 {
-                    str.append("Hàm số đồng biết trên (–∞;").append(x2).append("), (").append(x1).append(";+∞).\n");
-                    str.append("Hàm số nghịch biến trên (").append(x2).append(";").append(x1).append(").");
-                }
-            }
-            else 
-            {
-                if(delta.getNumerator()*delta.getDenominator() == 0)
-                {
-                    str.append("Δ = ").append(delta.toString()).append(" = 0.\n");
-                    str.append("=> y' có nghiệm kép x0=").append(inflectionPoint.toString());
-                }
-                else
-                {
-                    str.append("Δ = ").append(delta.toString()).append(" < 0, a=").append(a.toString()).append(" > 0");
-                    str.append("=> y' > 0, ");
-                }
-            
-                str.append("∀x ∈ R: Hàm số luôn tăng trên R.");
-            }            
-        }
-        else
-        {
-            if(delta.isPositive())
-            {
-                str.append("\nΔ = ").append(delta.toString()).append(" > 0.\n");
-                str.append("=> x1=").append(x1).append(", x2=").append(x2).append("\n");
-                if(x1 < x2)                
-                {                    
-                    str.append("Hàm số nghịch biết trên (–∞;").append(x1).append("), (").append(x2).append(";+∞).\n");
-                    str.append("Hàm số đồng biến trên (").append(x1).append(";").append(x2).append(").");
-                }
-                else
-                {
-                    str.append("Hàm số nghịch biết trên (–∞;").append(x2).append("), (").append(x1).append(";+∞).\n");
-                    str.append("Hàm số đồng biến trên (").append(x2).append(";").append(x1).append(").");
+                    str.append("Hàm số đồng biến trên (–∞; ").append(x2).append("), (").append(x1).append("; +∞).\n");
+                    str.append("Hàm số nghịch biến trên (").append(x2).append("; ").append(x1).append(").");
                 }
             }
             else 
@@ -148,15 +136,48 @@ public class CubicEquation extends CommonEquation {
                 if(delta.getNumerator()*delta.getDenominator() == 0)
                 {
                     str.append("\nΔ = ").append(delta.toString()).append(" = 0.\n");
-                    str.append("=> y' có nghiệm kép x0=").append(inflectionPoint.toString());
+                    str.append("=> y' có nghiệm kép x0 = ").append(inflectionPoint.toString());
                 }
                 else
                 {
-                    str.append("Δ = ").append(delta.toString()).append(" < 0, a=").append(a.toString()).append(" > 0");
+                    str.append("Δ = ").append(delta.toString()).append(" < 0, a = ").append(a.toString()).append(" > 0");
+                    str.append("=> y' > 0, ");
+                }
+            
+                str.append("\n∀x ∈ R: Hàm số luôn tăng trên R.");
+            }            
+        }
+        else
+        {
+            if(delta.isPositive())
+            {
+                str.append("\nΔ = ").append(delta.toString()).append(" > 0.\n");
+                str.append("=> x1 = ").append(x1).append(", x2 = ").append(x2).append("\n");
+                if(x1 < x2)                
+                {                    
+                    str.append("Hàm số nghịch biến trên (–∞; ").append(x1).append("), (").append(x2).append("; +∞).\n");
+                    str.append("Hàm số đồng biến trên (").append(x1).append("; ").append(x2).append(").");
+                }
+                else
+                {
+                    str.append("Hàm số nghịch biến trên (–∞; ").append(x2).append("), (").append(x1).append("; +∞).\n");
+                    str.append("Hàm số đồng biến trên (").append(x2).append("; ").append(x1).append(").");
+                }
+            }
+            else 
+            {
+                if(delta.getNumerator()*delta.getDenominator() == 0)
+                {
+                    str.append("\nΔ = ").append(delta.toString()).append(" = 0.\n");
+                    str.append("=> y' có nghiệm kép x0 = ").append(inflectionPoint.toString());
+                }
+                else
+                {
+                    str.append("\nΔ = ").append(delta.toString()).append(" < 0, a = ").append(a.toString()).append(" < 0");
                     str.append("=> y' < 0, ");
                 }
             
-                str.append("∀x ∈ R: Hàm số luôn giảm trên R.");
+                str.append("\n∀x ∈ R: Hàm số luôn giảm trên R.");
             }
         }
          
@@ -165,18 +186,26 @@ public class CubicEquation extends CommonEquation {
 
     @Override
     public String value() {
-        Fractor y = calculate(expression.getPolynomial(), inflectionPoint);
-        double y1 = calculate(expression.getPolynomial(), x1);
-        double y2 = calculate(expression.getPolynomial(), x2);
-        
-        int distance = (int)Math.abs(inflectionPoint.getNumerator()/inflectionPoint.getDenominator() - x1) + 1; // every point in graph is symmetry by inflection point
-        Fractor yL = calculate(expression.getPolynomial(), new Fractor(-distance)); // Point to the left of inflection point
-        Fractor yR = calculate(expression.getPolynomial(), new Fractor(distance)); // Point to the right of inflection point
+        Fractor y = calculate(inflectionPoint);
+        int distance = (int)Math.abs(inflectionPoint.getNumerator()/inflectionPoint.getDenominator() - 1);
         
         StringBuffer str = new StringBuffer("Tại x = ");
         str.append(inflectionPoint.toString()).append(", y = ").append(y.toString());
-        str.append("\nTại x = ").append(x1).append(", y = ").append(y1);
-        str.append("\nTại x = ").append(x2).append(", y = ").append(y2);
+        
+        if(delta.isPositive())
+        {
+            double y1 = calculate(x1);        
+            double y2 = calculate(x2);
+
+            distance = (int)Math.abs(inflectionPoint.getNumerator()/inflectionPoint.getDenominator() - x1); // every point in graph is symmetry by inflection point
+                   
+            str.append("\nTại x = ").append(x1).append(", y = ").append(y1);
+            str.append("\nTại x = ").append(x2).append(", y = ").append(y2);            
+        }        
+        
+        Fractor yL = calculate(new Fractor(-distance)); // Point to the left of inflection point
+        Fractor yR = calculate(new Fractor(distance)); // Point to the right of inflection point
+
         str.append("\nTại x = ").append(new Fractor(-distance).toString()).append(", y = ").append(yL);
         str.append("\nTại x = ").append(new Fractor(distance).toString()).append(", y = ").append(yR);
         
@@ -188,49 +217,49 @@ public class CubicEquation extends CommonEquation {
         Polynomial poly = new Polynomial(expression.getDerivative());
         poly.createDerivative();
         
-        StringBuffer str = new StringBuffer("Ta có: y''=");
+        StringBuffer str = new StringBuffer("Ta có: y\" = ");
         str.append(poly.derivativeString()).append("\n");
-        str.append("y''=0 <=> ").append(poly.derivativeString()).append("=0\n");
-        str.append("<=> x=").append(inflectionPoint.toString()).append("\n");
+        str.append("y\" = 0 <=> ").append(poly.derivativeString()).append(" = 0\n");
+        str.append("<=> x = ").append(inflectionPoint.toString()).append("\n");
         
-        Fractor y = calculate(expression.getPolynomial(), inflectionPoint);
-        str.append("Đồ thị nhận điểm I(").append(inflectionPoint.toString()).append(",").append(y.toString()).append(") làm điểm uốn.\n");
+        Fractor y = calculate(inflectionPoint);
+        str.append("Đồ thị nhận điểm I(").append(inflectionPoint.toString()).append(", ").append(y.toString()).append(") làm điểm uốn.\n");
         
         if(delta.isPositive())
         {
-            double y1 = calculate(expression.getPolynomial(), x1);
-            double y2 = calculate(expression.getPolynomial(), x2);
+            double y1 = calculate(x1);
+            double y2 = calculate(x2);
             
             if(a.isPositive())
             {
                 if(x1 < x2) // x1 is max and x2 is min
                 {
-                    str.append("Hàm số đạt cực đại tại (").append(x1).append(",").append(y1).append(").\n");
-                    str.append("Hàm số đạt cực tiểu tại (").append(x2).append(",").append(y2).append(").\n");
+                    str.append("Hàm số đạt cực đại tại (").append(x1).append(", ").append(y1).append(").\n");
+                    str.append("Hàm số đạt cực tiểu tại (").append(x2).append(", ").append(y2).append(").\n");
                 }
                 else // x2 is max and x1 is min
                 {
-                    str.append("Hàm số đạt cực đại tại (").append(x2).append(",").append(y2).append(").\n");
-                    str.append("Hàm số đạt cực tiểu tại (").append(x1).append(",").append(y1).append(").\n");
+                    str.append("Hàm số đạt cực đại tại (").append(x2).append(", ").append(y2).append(").\n");
+                    str.append("Hàm số đạt cực tiểu tại (").append(x1).append(", ").append(y1).append(").\n");
                 }
             }
             else
             {
                 if(x1 < x2) // x1 is min and x2 is max
                 {
-                    str.append("Hàm số đạt cực đại tại (").append(x2).append(",").append(y2).append(").\n");
-                    str.append("Hàm số đạt cực tiểu tại (").append(x1).append(",").append(y1).append(").\n");
+                    str.append("Hàm số đạt cực đại tại (").append(x2).append(", ").append(y2).append(").\n");
+                    str.append("Hàm số đạt cực tiểu tại (").append(x1).append(", ").append(y1).append(").\n");
                 }
                 else // x2 is min and x1 is max
                 {
-                    str.append("Hàm số đạt cực đại tại (").append(x1).append(",").append(y1).append(").\n");
-                    str.append("Hàm số đạt cực tiểu tại (").append(x2).append(",").append(y2).append(").\n");
+                    str.append("Hàm số đạt cực đại tại (").append(x1).append(", ").append(y1).append(").\n");
+                    str.append("Hàm số đạt cực tiểu tại (").append(x2).append(", ").append(y2).append(").\n");
                 }
             }
         }
         else
         {
-            str.append("Đồ thị hàm số không có cực trị.");
+            str.append("Đồ thị hàm số không có cực trị.\n");
         }
         
         return str.toString();

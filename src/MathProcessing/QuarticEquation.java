@@ -5,6 +5,8 @@
  */
 package MathProcessing;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author TranCamTu
@@ -18,7 +20,7 @@ public class QuarticEquation extends CommonEquation {
     private double x2; // roots of y'
     
     private double inflectionLeft;
-    private double inflectionRight; // roots of y''
+    private double inflectionRight; // roots of y"
     
     private Fractor root;
 
@@ -46,9 +48,24 @@ public class QuarticEquation extends CommonEquation {
             }
         }
         
-        root = a;
+        root = new Fractor(a);
         root.reciprocal();
-        root = b.multiply(new Fractor(-1)).multiply(new Fractor(1,2)).multiply(root);
+        root = b.multiply(new Fractor(-1)).multiply(new Fractor(1,2)).multiply(root); //root = -b/2a
+    }
+    
+    public Fractor getRoot()
+    {
+        return root;
+    }
+    
+    public double getX1()
+    {
+        return x1;
+    }
+    
+    public double getX2()
+    {
+        return x2;
     }
     
     @Override
@@ -66,41 +83,41 @@ public class QuarticEquation extends CommonEquation {
     public String variant() {
         expression.createDerivative();
         StringBuffer str = new StringBuffer("Ta có:");
-        str.append("\ny'=").append(expression.derivativeString());
-        str.append("\ny'=0 <=> ").append(expression.derivativeString()).append("=0");       
+        str.append("\ny' = ").append(expression.derivativeString());
+        str.append("\ny' = 0 <=> ").append(expression.derivativeString()).append(" = 0");       
         
-        str.append("\n<=> x=0 hoặc x^2=").append(root.toString());
+        str.append("\n<=> x = 0 hoặc x^2 = ").append(root.toString());
         
         if(root.isPositive())
         {
             x1 = Math.sqrt(1.0*root.getNumerator()/root.getDenominator());
             x2 = -Math.sqrt(1.0*root.getNumerator()/root.getDenominator());
-            str.append("\n<=> x=0, hoặc x=").append(x1).append(", hoặc x=").append(x2);
+            str.append("\n<=> x = 0, hoặc x = ").append(x1).append(", hoặc x = ").append(x2);
             
             if(a.isPositive())
             {
                 if(x1 < x2)
                 {
-                    str.append("\nHàm số nghịch biến trên (-∞;").append(x1).append(") và (0;").append(x2).append(").");
-                    str.append("\nHàm số đồng biến trên (").append(x1).append(";0) và (").append(x2).append(";+∞).");
+                    str.append("\nHàm số nghịch biến trên (-∞; ").append(x1).append(") và (0; ").append(x2).append(").");
+                    str.append("\nHàm số đồng biến trên (").append(x1).append("; 0) và (").append(x2).append("; +∞).");
                 }
                 else
                 {
-                    str.append("\nHàm số nghịch biến trên (-∞;").append(x2).append(") và (0;").append(x1).append(").");
-                    str.append("\nHàm số đồng biến trên (").append(x2).append(";0) và (").append(x1).append(";+∞).");
+                    str.append("\nHàm số nghịch biến trên (-∞; ").append(x2).append(") và (0; ").append(x1).append(").");
+                    str.append("\nHàm số đồng biến trên (").append(x2).append("; 0) và (").append(x1).append("; +∞).");
                 }
             }
             else
             {
                 if(x1 < x2)
                 {
-                    str.append("\nHàm số đồng biến trên (-∞;").append(x1).append(") và (0;").append(x2).append(").");
-                    str.append("\nHàm số nghịch biến trên (").append(x1).append(";0) và (").append(x2).append(";+∞).");
+                    str.append("\nHàm số đồng biến trên (-∞; ").append(x1).append(") và (0; ").append(x2).append(").");
+                    str.append("\nHàm số nghịch biến trên (").append(x1).append("; 0) và (").append(x2).append("; +∞).");
                 }
                 else
                 {
-                    str.append("\nHàm số đồng biến trên (-∞;").append(x2).append(") và (0;").append(x1).append(").");
-                    str.append("\nHàm số nghịch biến trên (").append(x2).append(";0) và (").append(x1).append(";+∞).");
+                    str.append("\nHàm số đồng biến trên (-∞; ").append(x2).append(") và (0; ").append(x1).append(").");
+                    str.append("\nHàm số nghịch biến trên (").append(x2).append("; 0) và (").append(x1).append("; +∞).");
                 }
             }
         }
@@ -108,29 +125,44 @@ public class QuarticEquation extends CommonEquation {
         {
             if(a.isPositive())
             {
-                str.append("\nHàm số nghịch biến trên (-∞;0) và đồng biến trên (0;+∞)");
+                str.append("\nHàm số nghịch biến trên (-∞; 0) và đồng biến trên (0; +∞)");
             }
             else
             {
-                str.append("\nHàm số đồng biến trên (-∞;0) và nghịch biến trên (0;+∞)");
-            }
+                str.append("\nHàm số đồng biến trên (-∞; 0) và nghịch biến trên (0; +∞)");
+            }            
         }
         
         return str.toString();
     }
 
     @Override
-    public String value() {
-        double y = calculate(expression.getPolynomial(), x1);        
-        double distance = Math.abs(x2 - x1);        
-        double yL = calculate(expression.getPolynomial(), -distance);
+    public String value() {        
+        StringBuffer str = new StringBuffer("Tại x = 0, y = ");        
         
-        StringBuffer str = new StringBuffer("Tại x=0, y=");
-        str.append(c.toString());
-        str.append("\nTại x=").append(x1).append(", y=").append(y);
-        str.append("\nTại x=").append(x2).append(", y=").append(y);
-        str.append("\nTại x=").append(-distance).append(", y=").append(yL);
-        str.append("\nTại x=").append(distance).append(", y=").append(yL);
+        if(root.isPositive())
+        {
+            Fractor y = calculate(root); 
+            str.append(c.toString());
+            str.append("\nTại x = ").append(x1).append(", y = ").append(y);
+            str.append("\nTại x = ").append(x2).append(", y = ").append(y);
+
+            double distance = Math.abs(x2 - x1);
+            double yL = calculate(-distance);
+            
+            str.append("\nTại x = ").append(-distance).append(", y = ").append(yL);
+            str.append("\nTại x = ").append(distance).append(", y = ").append(yL);            
+        }
+        else
+        {
+            Fractor x1_ = root.subtract(new Fractor(1));
+            Fractor x2_ = root.add(new Fractor(1));
+            Fractor y = calculate(x1_); 
+            str.append(c.toString());
+            str.append("\nTại x = ").append(x1_).append(", y = ").append(y);
+            str.append("\nTại x = ").append(x2_).append(", y = ").append(y);
+
+        }
         
         return str.toString();
     }
@@ -140,22 +172,22 @@ public class QuarticEquation extends CommonEquation {
         Polynomial poly = new Polynomial(expression.getDerivative());
         poly.createDerivative();
         
-        StringBuffer str = new StringBuffer("\nTa có:\ny''=");
+        StringBuffer str = new StringBuffer("Ta có:\ny\" = ");
         str.append(poly.derivativeString());
-        str.append("\ny''=0 <=> ").append(poly.derivativeString()).append("=0");
+        str.append("\ny\" = 0 <=> ").append(poly.derivativeString()).append(" = 0");
         
         Fractor f = root.multiply(new Fractor(1, 3));        
-        str.append("\n<=> x^2=").append(f.toString());
+        str.append("\n<=> x^2 = ").append(f.toString());
         
         if(f.isPositive())
         {
             inflectionLeft = -Math.abs(1.0*f.getNumerator()/f.getDenominator());
             inflectionRight = Math.abs(1.0*f.getNumerator()/f.getDenominator());
-            double yL = calculate(poly.getPolynomial(), inflectionLeft);
+            double yL = calculate(inflectionLeft);
             
             str.append("\nĐồ thị hàm số có hai điểm uốn: ");
-            str.append("I1(").append(inflectionLeft).append(",").append(yL).append("), ");
-            str.append("I2(").append(inflectionRight).append(",").append(yL).append(").");
+            str.append("I1(").append(inflectionLeft).append(", ").append(yL).append("), ");
+            str.append("I2(").append(inflectionRight).append(", ").append(yL).append(").");
         }
         else
         {
@@ -166,35 +198,59 @@ public class QuarticEquation extends CommonEquation {
         {
             if(root.isPositive())
             {
-                double y = calculate(expression.getPolynomial(), x1);
+                double y = calculate(x1);
                 
                 str.append("\nHàm số đạt cực tiểu tại hai điểm: ");
-                str.append("(").append(x1).append(",").append(y).append("), ");
-                str.append("(").append(x2).append(",").append(y).append(").");
-                str.append("\nHàm số đạt cực đại tại điểm: (0,").append(c.toString()).append(").");                
+                str.append("(").append(x1).append(", ").append(y).append("), ");
+                str.append("(").append(x2).append(", ").append(y).append(").");
+                str.append("\nHàm số đạt cực đại tại điểm: (0, ").append(c.toString()).append(").");                
             }
             else
             {
-                str.append("\nHàm số đạt cực tiểu tại điểm: (0,").append(c.toString()).append(").");
+                str.append("\nHàm số đạt cực tiểu tại điểm: (0, ").append(c.toString()).append(").");
             }
         }
         else
         {
             if(root.isPositive())
             {
-                double y = calculate(expression.getPolynomial(), x1);
+                double y = calculate(x1);
                 
                 str.append("\nHàm số đạt cực đại tại hai điểm: ");
-                str.append("(").append(x1).append(",").append(y).append("), ");
-                str.append("(").append(x2).append(",").append(y).append(").");
-                str.append("\nHàm số đạt cực tiểu tại điểm: (0,").append(c.toString()).append(").");                
+                str.append("(").append(x1).append(", ").append(y).append("), ");
+                str.append("(").append(x2).append(", ").append(y).append(").");
+                str.append("\nHàm số đạt cực tiểu tại điểm: (0, ").append(c.toString()).append(").");                
             }
             else
             {
-                str.append("\nHàm số đạt cực đại tại điểm: (0,").append(c.toString()).append(").");
+                str.append("\nHàm số đạt cực đại tại điểm: (0, ").append(c.toString()).append(").");
             }
         }
         
         return str.toString();
     } 
+    
+    @Override
+    public Fractor calculate(Fractor f)
+    {
+        Fractor result = new Fractor();
+        for(int i = 0; i < expression.getPolynomial().size(); i++)
+        {
+            Monomial mono = expression.getPolynomial().get(i);
+            if(mono.getPower() == 4)
+            {
+                result = result.add(mono.getCoefficient().multiply(f).multiply(f));
+            }
+            else if(mono.getPower() == 2)
+            {
+                result = result.add(mono.getCoefficient().multiply(f));
+            }
+            else
+            {
+                result = result.add(mono.getCoefficient());
+            }
+        }
+        
+        return result;
+    }
 }

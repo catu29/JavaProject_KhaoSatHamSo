@@ -18,7 +18,7 @@ public class LinearEquation extends CommonEquation{
     @Override
     public String limitation()
     {
-        return "(-∞; +∞)";
+        return "Hàm số có giới hạn trong khoảng (-∞; +∞)";
     }
     
     @Override
@@ -36,10 +36,10 @@ public class LinearEquation extends CommonEquation{
     @Override
     public String value()
     {
-        double y = calculate(expression.getPolynomial(), 0);
-        double y1 = calculate(expression.getPolynomial(), 1);
+        double y = calculate(0);
+        double y1 = calculate(1);
         
-        String str = "Với x=0, y=" + y + "\nVới x=1, y=" + y1;
+        String str = "Với x = 0, y = " + y + "\nVới x = 1, y = " + y1;
         return str;
     }
     

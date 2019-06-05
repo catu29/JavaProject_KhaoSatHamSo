@@ -97,6 +97,12 @@ public class Fractor {
         
         numerator /= gcd;
         denominator /= gcd;
+        
+        if(numerator*denominator < 0)
+        {
+            numerator = -Math.abs(numerator);
+            denominator = Math.abs(denominator);
+        }
     }
     
     public Fractor add(Fractor f)
