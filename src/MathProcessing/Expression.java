@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
  */
 public class Expression {
     private String expression;
-    private boolean isTrigonometric = false;
     
     //=== region Constructors
     public Expression()
@@ -76,7 +75,7 @@ public class Expression {
             return false;
         
         if(expression.charAt(0) == '*' || expression.charAt(0) == '/' || expression.charAt(0) == ')')
-            return false;
+            return false; 
         
         if(expression.charAt(expression.length()-1) != ')' 
                 && !MathStaticMethod.isVariable(Character.toString(expression.charAt(expression.length()-1)))
